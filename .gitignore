@@ -1,0 +1,7 @@
+*.txt
+*.dll
+*.vcxproj
+*.vcxproj.filters
+*.vcproj.user
+Debug/
+images/
