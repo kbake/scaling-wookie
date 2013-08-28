@@ -2,6 +2,6 @@
 *.dll
 *.vcxproj
 *.vcxproj.filters
-*.vcproj.user
+*.vcxproj.user
 Debug/
 images/
