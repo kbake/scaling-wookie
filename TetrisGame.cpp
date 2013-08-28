@@ -38,31 +38,21 @@ void TetrisGame::Start()
 	_blockSprite.setTexture(_blockTexture);
 	_blockSprite.setColor(sf::Color(0, 255, 0));
 
-	Piece ip;
-	/*int tempip[4][4] = new {
+	TetrisPiece ip;
+	/*
 	{0, 0, 0, 0},
 	{1, 1, 1, 1},
 	{0, 0, 0, 0},
 	{0, 0, 0, 0}
-	};*/
-	//ip.shape = *tempip;
-	ip.length = 4;
-	ip.x = 0;
-	ip.y = 0;
-	ip.shape = new int*[4];
-	for (int i = 0; i < 4; i++)
-	{
-		ip.shape[i] = new int[4];
-		for (int j = 0; j < 4; j++)
-		{
-			ip.shape[i][j] = 0;
-		}
-	}
-	ip.shape[0][1] = 1;
-	ip.shape[1][1] = 1;
-	ip.shape[2][1] = 1;
-	ip.shape[3][1] = 1;
+	};
+	*/
+	ip.SetLength(4);
+	ip.GetShape()[0][1] = 1;
+	ip.GetShape()[1][1] = 1;
+	ip.GetShape()[2][1] = 1;
+	ip.GetShape()[3][1] = 1;
 
+/*
 	Piece jp;
 	jp.length = 3;
 	jp.x = 0;
@@ -85,7 +75,7 @@ void TetrisGame::Start()
 	{1, 1, 1},
 	{0, 0, 0}
 	};
-*/
+
 
 
 	Piece bp;
@@ -105,7 +95,7 @@ void TetrisGame::Start()
 	{1, 1},
 	{1, 1}
 	};
-*/
+
 
 	Piece sp;
 	sp.length = 3;
@@ -129,7 +119,7 @@ void TetrisGame::Start()
 	{1, 1, 0},
 	{0, 0, 0}
 	};
-*/
+
 
 
 	Piece tp;
@@ -154,7 +144,7 @@ void TetrisGame::Start()
 	{1, 1, 1},
 	{0, 0, 0}
 	};
-*/
+
 
 
 	Piece zp;
@@ -180,13 +170,9 @@ void TetrisGame::Start()
 	};
 */
 	_pieces[0] = ip;
-	_pieces[1] = jp;
-	_pieces[2] = bp;
-	_pieces[3] = sp;
-	_pieces[4] = tp;
-	_pieces[5] = zp;
+
 	
-	currentPiece = _pieces[(rand() % (int)(6))];
+	currentPiece = _pieces[0];
 
 	while (!IsExiting())
 	{

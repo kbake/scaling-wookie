@@ -13,9 +13,43 @@ TetrisPiece::~TetrisPiece(void)
 {
 }
 
+sf::Vector2i TetrisPiece::GetCoords() const
+{
+	return coords;
+}
+
+int TetrisPiece::GetLength() const
+{
+	return length;
+}
+
+int** TetrisPiece::GetShape()
+{
+	return shape;
+}
+
 void TetrisPiece::SetTexture(sf::Texture& t)
 {
 	texture = t;
+}
+
+void TetrisPiece::SetLength(int len)
+{
+	length = len;
+
+	initializeShape();
+}
+
+void TetrisPiece::initializeShape()
+{
+	for (int i = 0; i < length; i++)
+	{
+		shape[i] = new int[length];
+		for (int j = 0; j < length; j++)
+		{
+			shape[i][j] = 0;
+		}
+	}
 }
 
 void TetrisPiece::Draw(sf::RenderWindow& renderWindow)
