@@ -18,7 +18,7 @@ public:
 	int CheckRow(int) const;
 	void DeleteRow(int);
 
-	void Draw(sf::RenderWindow&);
+	void Draw(sf::RenderWindow&);	// would be nice to just create these sprites once, instead of every frame, should be easy
 
 private:
 	static const int BOARD_WIDTH = 10;
