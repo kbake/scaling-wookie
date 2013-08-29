@@ -11,6 +11,8 @@ public:
 
 	void SetTexture(sf::Texture&);
 	void SetLength(int);
+	void SetCoords(sf::Vector2i);
+	void SetShape(int*);
 
 	void Draw(sf::RenderWindow&);
 

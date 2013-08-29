@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TetrisPiece.h"
+
 class TetrisBoard
 {
 public:
@@ -17,8 +19,8 @@ public:
 	void Draw(sf::RenderWindow&);
 
 private:
-	const int BOARD_WIDTH = 10;
-	const int BOARD_HEIGHT = 20;
+	static const int BOARD_WIDTH = 10;
+	static const int BOARD_HEIGHT = 20;
 
 	sf::Texture _texture;
 

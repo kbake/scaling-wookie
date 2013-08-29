@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TetrisBoard.h"
+
 class TetrisGame
 {
 public:

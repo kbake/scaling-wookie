@@ -40,8 +40,21 @@ void TetrisPiece::SetLength(int len)
 	initializeShape();
 }
 
+void TetrisPiece::SetCoords(sf::Vector2i vec)
+{
+	coords.x += vec.x;
+	coords.y += vec.y;
+}
+
+void TetrisPiece::SetShape(int* temp)
+{
+	shape = &(temp);
+}
+
 void TetrisPiece::initializeShape()
 {
+	shape = new int*[length];
+
 	for (int i = 0; i < length; i++)
 	{
 		shape[i] = new int[length];
