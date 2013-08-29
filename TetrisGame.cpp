@@ -46,123 +46,79 @@ void TetrisGame::Start()
 	{0, 0, 0, 0}
 	};
 	*/
+	ip.SetTexture(_blockTexture);
 	ip.SetLength(4);
 	ip.GetShape()[0][1] = 1;
 	ip.GetShape()[1][1] = 1;
 	ip.GetShape()[2][1] = 1;
 	ip.GetShape()[3][1] = 1;
 
-/*
-	Piece jp;
-	jp.length = 3;
-	jp.x = 0;
-	jp.y = 0;
-	jp.shape = new int*[jp.length];
-	for (int i = 0; i < jp.length; i++)
-	{
-		jp.shape[i] = new int[jp.length];
-		for (int j = 0; j < jp.length; j++)
-		{
-			jp.shape[i][j] = 0;
-		}
-	}
-	jp.shape[0][2] = 1;
-	jp.shape[1][0] = 1;
-	jp.shape[1][1] = 1;
-	jp.shape[1][2] = 1;
-	/*	int tempjp[3][3] = {
+
+	TetrisPiece jp;
+	jp.SetTexture(_blockTexture);
+	jp.SetLength(3);
+	jp.GetShape()[0][2] = 1;
+	jp.GetShape()[1][0] = 1;
+	jp.GetShape()[1][1] = 1;
+	jp.GetShape()[1][2] = 1;
+/*	int tempjp[3][3] = {
 	{0, 0, 1},
 	{1, 1, 1},
 	{0, 0, 0}
 	};
+*/
 
 
-
-	Piece bp;
-	bp.length = 2;
-	bp.x = 0;
-	bp.y = 0;
-	bp.shape = new int*[2];
-	for (int i = 0; i < bp.length; i++)
-	{
-		bp.shape[i] = new int[bp.length];
-		for (int j = 0; j < bp.length; j++)
-		{
-			bp.shape[i][j] = 1;
-		}
-	}
+	TetrisPiece bp;
+	bp.SetTexture(_blockTexture);
+	bp.SetLength(2);
+	bp.GetShape()[0][0] = 1;
+	bp.GetShape()[0][1] = 1;
+	bp.GetShape()[1][0] = 1;
+	bp.GetShape()[1][1] = 1;
 /*	int tempbp[2][2] = {
 	{1, 1},
 	{1, 1}
 	};
+*/
 
-
-	Piece sp;
-	sp.length = 3;
-	sp.x = 0;
-	sp.y = 0;
-	sp.shape = new int*[3];
-	for (int i = 0; i < sp.length; i++)
-	{
-		sp.shape[i] = new int[sp.length];
-		for (int j = 0; j < sp.length; j++)
-		{
-			sp.shape[i][j] = 0;
-		}
-	}
-	sp.shape[0][1] = 1;
-	sp.shape[0][2] = 1;
-	sp.shape[1][0] = 1;
-	sp.shape[1][1] = 1;
+	TetrisPiece sp;
+	sp.SetTexture(_blockTexture);
+	sp.SetLength(3);
+	sp.GetShape()[0][1] = 1;
+	sp.GetShape()[0][2] = 1;
+	sp.GetShape()[1][0] = 1;
+	sp.GetShape()[1][1] = 1;
 /*	int tempsp[3][3] = {
 	{0, 1, 1},
 	{1, 1, 0},
 	{0, 0, 0}
 	};
+*/
 
 
-
-	Piece tp;
-	tp.length = 3;
-	tp.x = 0;
-	tp.y = 0;
-	tp.shape = new int*[3];
-	for (int i = 0; i < tp.length; i++)
-	{
-		tp.shape[i] = new int[tp.length];
-		for (int j = 0; j < tp.length; j++)
-		{
-			tp.shape[i][j] = 0;
-		}
-	}
-	tp.shape[0][1] = 1;
-	tp.shape[1][0] = 1;
-	tp.shape[1][1] = 1;
-	tp.shape[1][2] = 1;
+	TetrisPiece tp;
+	tp.SetTexture(_blockTexture);
+	tp.SetLength(3);
+	tp.GetShape()[0][1] = 1;
+	tp.GetShape()[1][0] = 1;
+	tp.GetShape()[1][1] = 1;
+	tp.GetShape()[1][2] = 1;
 /*	int temptp[3][3] = {
 	{0, 1, 0},
 	{1, 1, 1},
 	{0, 0, 0}
 	};
+*/
 
 
-
-	Piece zp;
-	zp.length = 3;
-	zp.x = zp.y = 0;
-	zp.shape = new int*[3];
-	for (int i = 0; i < zp.length; i++)
-	{
-		zp.shape[i] = new int[zp.length];
-		for (int j = 0; j < zp.length; j++)
-		{
-			zp.shape[i][j] = 0;
-		}
-	}
-	zp.shape[0][0] = 1;
-	zp.shape[0][1] = 1;
-	zp.shape[1][1] = 1;
-	zp.shape[1][2] = 1;
+	TetrisPiece zp;
+	zp.SetTexture(_blockTexture);
+	zp.SetLength(3);
+	zp.GetShape()[0][0] = 1;
+	zp.GetShape()[0][1] = 1;
+	zp.GetShape()[1][1] = 1;
+	zp.GetShape()[1][2] = 1;
 /*	int tempzp[3][3] = {
 	{1, 1, 0},
 	{0, 1, 1},
@@ -170,35 +126,21 @@ void TetrisGame::Start()
 	};
 */
 	_pieces[0] = ip;
+	_pieces[1] = jp;
+	_pieces[2] = bp;
+	_pieces[3] = sp;
+	_pieces[4] = tp;
+	_pieces[5] = zp;
 
 	
-	currentPiece = _pieces[0];
+	currentPiece = _pieces[(rand() % 6)];
+
+	board.SetTexture(_blockTexture);
 
 	while (!IsExiting())
 	{
 		GameLoop();
 	}
-}
-
-void TetrisGame::MovePiece(TetrisPiece& a_piece)
-{
-	a_piece.SetCoords(sf::Vector2i(32, 32));
-	/*switch (_blockState)
-	{
-	case BlockState::Starting:
-		a_piece.x = 2;
-		a_piece.y = 0;
-
-		AddPiece(a_piece);
-
-		_blockState = BlockState::Moving;
-
-		break;
-	case BlockState::Moving:
-		break;
-	case BlockState::Stopped:
-		break;
-	}*/
 }
 
 void TetrisGame::AddPiece(TetrisPiece& a_piece)
@@ -211,55 +153,6 @@ void TetrisGame::AddPiece(TetrisPiece& a_piece)
 	for ( ; startY < startY + a_piece.length; startY++)
 	{
 	_board[startX][startY]*/
-}
-
-void TetrisGame::RotatePiece(TetrisPiece& a_piece)
-{
-	int size = a_piece.GetLength();
-	int** temp = new int*[size];
-	std::cout << "Before:" << std::endl;
-	for (int k = 0; k < size; k++)
-	{
-		temp[k] = new int[size];
-		for (int l = 0; l < size; l++)
-		{
-			std::cout << a_piece.GetShape()[l][k];
-			temp[k][l] = 0;
-		}
-
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	// rotate the piece 90 degrees clockwise
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			int tempint = (size - 1) - i;
-			temp[i][j] = a_piece.GetShape()[j][tempint];
-		}
-	}
-
-	for (int iter = 0; iter < a_piece.GetLength(); iter++)
-	{
-		delete [] a_piece.GetShape()[iter];	// delete each dynamically created int array
-	}
-
-	delete [] a_piece.GetShape();	// delete the dynamically created int* array
-
-	a_piece.SetShape(*temp);
-
-	std::cout << "After:" << std::endl;
-	for (int i = 0; i < a_piece.GetLength(); i++)
-	{
-		for (int j = 0; j < a_piece.GetLength(); j++)
-		{
-			std::cout << a_piece.GetShape()[j][i];
-		}
-		std::cout << std::endl;
-	}
-
-	std::cout << std::endl;
 }
 
 bool TetrisGame::canRotate(TetrisPiece& a_piece)
@@ -558,9 +451,6 @@ void TetrisGame::GameLoop()
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				//_blockSprite.move(0.f, 32.f);
-				//MovePiece(currentPiece);
-
 				if (canMoveDown(currentPiece))
 				{
 					currentPiece.SetCoords(sf::Vector2i(0, 1));
@@ -572,7 +462,7 @@ void TetrisGame::GameLoop()
 			{
 				if (canRotate(currentPiece))
 				{
-					RotatePiece(currentPiece);
+					currentPiece.Rotate();
 				}
 			}
 		}

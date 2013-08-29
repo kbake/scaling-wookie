@@ -14,6 +14,8 @@ public:
 	void SetCoords(sf::Vector2i);
 	void SetShape(int*);
 
+	void Rotate();
+
 	void Draw(sf::RenderWindow&);
 
 private:

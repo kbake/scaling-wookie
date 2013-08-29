@@ -65,6 +65,55 @@ void TetrisPiece::initializeShape()
 	}
 }
 
+void TetrisPiece::Rotate()
+{
+	int size = length;
+	int** temp = new int*[size];
+	std::cout << "Before:" << std::endl;
+	for (int k = 0; k < size; k++)
+	{
+		temp[k] = new int[size];
+		for (int l = 0; l < size; l++)
+		{
+			std::cout << shape[l][k];
+			temp[k][l] = 0;
+		}
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	// rotate the piece 90 degrees clockwise
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			int tempint = (size - 1) - i;
+			temp[i][j] = shape[j][tempint];
+		}
+	}
+
+	for (int iter = 0; iter < length; iter++)
+	{
+		delete [] shape[iter];	// delete each dynamically created int array
+	}
+
+	delete [] shape;	// delete the dynamically created int* array
+
+	shape = &(*temp);
+
+	std::cout << "After:" << std::endl;
+	for (int i = 0; i < length; i++)
+	{
+		for (int j = 0; j < length; j++)
+		{
+			std::cout << shape[j][i];
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << std::endl;
+}
+
 void TetrisPiece::Draw(sf::RenderWindow& renderWindow)
 {
 	sf::Sprite* temp;

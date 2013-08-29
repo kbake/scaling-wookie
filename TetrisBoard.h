@@ -11,6 +11,8 @@ public:
 	int GetBoardWidth() const;
 	int GetBoardHeight() const;
 
+	void SetTexture(sf::Texture&);
+
 	void AddPiece(TetrisPiece&);
 	
 	int CheckRow(int) const;

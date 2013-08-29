@@ -5,6 +5,13 @@
 
 TetrisBoard::TetrisBoard(void)
 {
+	for (int i = 0; i < BOARD_WIDTH; i++)
+	{
+		for (int j = 0; j < BOARD_HEIGHT; j++)
+		{
+			board[i][j] = 0;
+		}
+	}
 }
 
 
@@ -20,6 +27,11 @@ int TetrisBoard::GetBoardWidth() const
 int TetrisBoard::GetBoardHeight() const
 {
 	return BOARD_HEIGHT;
+}
+
+void TetrisBoard::SetTexture(sf::Texture& t)
+{
+	_texture = t;
 }
 
 void TetrisBoard::AddPiece(TetrisPiece& a_piece)
