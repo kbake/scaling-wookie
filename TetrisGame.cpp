@@ -143,16 +143,10 @@ void TetrisGame::Start()
 	}
 }
 
-void TetrisGame::AddPiece(TetrisPiece& a_piece)
+void TetrisGame::CreateNewPiece()
 {
-	//int startX = a_piece.x;
-	//int startY = a_piece.y;
-
-	/*for ( ; startX < startX + a_piece.length; startX++)
-	{
-	for ( ; startY < startY + a_piece.length; startY++)
-	{
-	_board[startX][startY]*/
+	currentPiece = _pieces[(rand() % 6)];
+	currentPiece.SetCoords(sf::Vector2i(0, 0));
 }
 
 bool TetrisGame::canRotate(TetrisPiece& a_piece)
@@ -454,6 +448,14 @@ void TetrisGame::GameLoop()
 				if (canMoveDown(currentPiece))
 				{
 					currentPiece.SetCoords(sf::Vector2i(0, 1));
+				}
+				else
+				{
+					// add current piece to the board (however I plan on doing that)
+					board.AddPiece(currentPiece);
+
+					// create a new randomized piece at the top of the screen
+					CreateNewPiece();
 				}
 
 				std::cout << currentPiece.GetCoords().x << " " << currentPiece.GetCoords().y << std::endl;

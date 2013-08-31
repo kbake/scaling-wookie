@@ -53,7 +53,7 @@ private:
 
 	TetrisPiece currentPiece;
 
-	void AddPiece(TetrisPiece&);
+	void CreateNewPiece();
 
 	bool canRotate(TetrisPiece&);
 	bool canMoveRight(TetrisPiece&);

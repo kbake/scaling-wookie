@@ -11,6 +11,15 @@ TetrisPiece::TetrisPiece(void) :
 
 TetrisPiece::~TetrisPiece(void)
 {
+	if (shape)
+	{
+		for (int i = 0; i < length; i++)
+		{
+			delete [] shape[i];
+		}
+
+		delete [] shape;
+	}
 }
 
 sf::Vector2i TetrisPiece::GetCoords() const

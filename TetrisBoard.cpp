@@ -39,13 +39,16 @@ void TetrisBoard::AddPiece(TetrisPiece& a_piece)
 	int lengthX = a_piece.GetLength() + a_piece.GetCoords().x,
 		lengthY = a_piece.GetLength() + a_piece.GetCoords().y;
 
-	for (int i = a_piece.GetCoords().x; i < lengthX; i++)
+	for (int i = a_piece.GetCoords().x, k = 0; i < lengthX; i++, k++)
 	{
-		for (int j = a_piece.GetCoords().y; j < lengthY; j++)
+		for (int j = a_piece.GetCoords().y, n = 0; j < lengthY; j++, n++)
 		{
 			if (i < BOARD_WIDTH && j < BOARD_HEIGHT)
 			{
-				board[i][j] = 1;
+				if (a_piece.GetShape()[k][n] == 1) 
+				{
+					board[i][j] = 1;
+				}
 			}
 		}
 	}
