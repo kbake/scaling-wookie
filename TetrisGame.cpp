@@ -28,15 +28,6 @@ void TetrisGame::Start()
 
 	_boardLocation = sf::Vector2i(0, 0);
 
-	// initialize the board to all zero
-	//for (int y = 0; y < BOARD_HEIGHT; y++)
-	//{
-	//	for (int x = 0; x < BOARD_WIDTH; x++)
-	//	{
-	//		_board[x][y] = 0;
-	//	}
-	//}
-
 	_blockTexture.loadFromFile("images/block.png");
 	_blockTexture.setRepeated(true);
 
@@ -146,9 +137,6 @@ void TetrisGame::Start()
 	{
 		GameLoop();
 	}
-
-	delete currentPiece;
-	currentPiece = NULL;
 }
 
 void TetrisGame::CreateNewPiece()

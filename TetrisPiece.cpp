@@ -3,7 +3,7 @@
 
 
 TetrisPiece::TetrisPiece(void) :
-	coords(0,0),
+	coords(4,0),
 	length(0)
 {
 }
