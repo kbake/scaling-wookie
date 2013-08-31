@@ -8,6 +8,47 @@ TetrisPiece::TetrisPiece(void) :
 {
 }
 
+TetrisPiece::TetrisPiece(const TetrisPiece& tp)
+{
+	if (this != &tp)
+	{
+		coords = tp.GetCoords();
+		length = tp.GetLength();
+		texture = tp.GetTexture();
+
+		initializeShape();
+
+		for (int i = 0; i < length; i++)
+		{
+			for (int j = 0; j < length; j++)
+			{
+				shape[i][j] = tp.GetShape()[i][j];
+			}
+		}
+	}
+}
+
+TetrisPiece& TetrisPiece::operator=(const TetrisPiece& tp)
+{
+	if (this != &tp)
+	{
+		coords = tp.GetCoords();
+		length = tp.GetLength();
+		texture = tp.GetTexture();
+
+		initializeShape();
+
+		for (int i = 0; i < length; i++)
+		{
+			for (int j = 0; j < length; j++)
+			{
+				shape[i][j] = tp.GetShape()[i][j];
+			}
+		}
+	}
+
+	return *this;
+}
 
 TetrisPiece::~TetrisPiece(void)
 {
@@ -16,9 +57,11 @@ TetrisPiece::~TetrisPiece(void)
 		for (int i = 0; i < length; i++)
 		{
 			delete [] shape[i];
+			shape[i] = NULL;
 		}
 
 		delete [] shape;
+		shape = NULL;
 	}
 }
 
@@ -32,9 +75,14 @@ int TetrisPiece::GetLength() const
 	return length;
 }
 
-int** TetrisPiece::GetShape()
+int** TetrisPiece::GetShape() const
 {
 	return shape;
+}
+
+sf::Texture TetrisPiece::GetTexture() const
+{
+	return texture;
 }
 
 void TetrisPiece::SetTexture(sf::Texture& t)
@@ -53,11 +101,6 @@ void TetrisPiece::SetCoords(sf::Vector2i vec)
 {
 	coords.x += vec.x;
 	coords.y += vec.y;
-}
-
-void TetrisPiece::SetShape(int* temp)
-{
-	shape = &(temp);
 }
 
 void TetrisPiece::initializeShape()

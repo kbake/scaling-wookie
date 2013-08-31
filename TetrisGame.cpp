@@ -15,6 +15,11 @@ TetrisGame::TetrisGame(void) :
 
 TetrisGame::~TetrisGame(void)
 {
+	if (currentPiece)
+	{
+		delete currentPiece;
+		currentPiece = NULL;
+	}
 }
 
 void TetrisGame::Start()
@@ -132,8 +137,8 @@ void TetrisGame::Start()
 	_pieces[4] = tp;
 	_pieces[5] = zp;
 
-	
-	currentPiece = _pieces[(rand() % 6)];
+	int random = rand() % 6;
+	currentPiece = new TetrisPiece(_pieces[random]);
 
 	board.SetTexture(_blockTexture);
 
@@ -141,12 +146,20 @@ void TetrisGame::Start()
 	{
 		GameLoop();
 	}
+
+	delete currentPiece;
+	currentPiece = NULL;
 }
 
 void TetrisGame::CreateNewPiece()
 {
-	currentPiece = _pieces[(rand() % 6)];
-	currentPiece.SetCoords(sf::Vector2i(0, 0));
+	delete currentPiece;
+	currentPiece = NULL;
+
+	int random = rand() % 6;
+
+	currentPiece = new TetrisPiece(_pieces[random]);
+	currentPiece->SetCoords(sf::Vector2i(0, 0));
 }
 
 bool TetrisGame::canRotate(TetrisPiece& a_piece)
@@ -344,43 +357,6 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 	return true;
 }
 
-//void TetrisGame::DrawBoard()
-//{
-//	/*for (std::list<sf::Sprite*>::const_iterator it = spriteList.begin(); it != spriteList.end(); it++)
-//	{
-//	//_mainWindow.draw(it);
-//	_mainWindow.draw((**it));
-//
-//	//delete *it;
-//	}*/
-//
-//	sf::Sprite* temp;
-//
-//	for (int x = 0; x < BOARD_WIDTH; x++)
-//	{
-//		for (int y = 0; y < BOARD_HEIGHT; y++)
-//		{
-//			temp = new sf::Sprite();
-//			temp->setTexture(_blockTexture);
-//			temp->setPosition(32.f * x, 32.f * y);
-//
-//			if (_board[x][y] != 0)
-//			{
-//				temp->setColor(sf::Color(15, 100, 200));
-//			}
-//			else
-//			{
-//				temp->setColor(sf::Color());
-//			}
-//
-//			_mainWindow.draw(*temp);
-//			delete temp;
-//			temp = NULL;
-//		}
-//	}
-//
-//}
-
 void TetrisGame::GameLoop()
 {
 	sf::Event event;
@@ -398,7 +374,7 @@ void TetrisGame::GameLoop()
 		_mainWindow.clear(sf::Color(0, 255, 255));
 
 		board.Draw(_mainWindow);
-		currentPiece.Draw(_mainWindow);
+		currentPiece->Draw(_mainWindow);
 
 		_mainWindow.display();
 
@@ -426,45 +402,45 @@ void TetrisGame::GameLoop()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				//_blockSprite.move(32.f, 0.f);
-				if (canMoveRight(currentPiece)) 
+				if (canMoveRight(*currentPiece)) 
 				{
-					currentPiece.SetCoords(sf::Vector2i(1, 0));
+					currentPiece->SetCoords(sf::Vector2i(1, 0));
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				//_blockSprite.move(-32.f, 0.f);
-				if (canMoveLeft(currentPiece))
+				if (canMoveLeft(*currentPiece))
 				{
-					currentPiece.SetCoords(sf::Vector2i(-1, 0));
+					currentPiece->SetCoords(sf::Vector2i(-1, 0));
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				currentPiece.SetCoords(sf::Vector2i(0, -1));
+				currentPiece->SetCoords(sf::Vector2i(0, -1));
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				if (canMoveDown(currentPiece))
+				if (canMoveDown(*currentPiece))
 				{
-					currentPiece.SetCoords(sf::Vector2i(0, 1));
+					currentPiece->SetCoords(sf::Vector2i(0, 1));
 				}
 				else
 				{
 					// add current piece to the board (however I plan on doing that)
-					board.AddPiece(currentPiece);
+					board.AddPiece(*currentPiece);
 
 					// create a new randomized piece at the top of the screen
 					CreateNewPiece();
 				}
 
-				std::cout << currentPiece.GetCoords().x << " " << currentPiece.GetCoords().y << std::endl;
+				std::cout << currentPiece->GetCoords().x << " " << currentPiece->GetCoords().y << std::endl;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				if (canRotate(currentPiece))
+				if (canRotate(*currentPiece))
 				{
-					currentPiece.Rotate();
+					currentPiece->Rotate();
 				}
 			}
 		}

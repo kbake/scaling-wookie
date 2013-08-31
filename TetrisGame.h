@@ -51,7 +51,7 @@ private:
 
 	TetrisPiece _pieces[6];
 
-	TetrisPiece currentPiece;
+	TetrisPiece* currentPiece;
 
 	void CreateNewPiece();
 
