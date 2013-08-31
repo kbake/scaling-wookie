@@ -330,29 +330,36 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 
 		for (int i = 0; i < a_piece.GetLength(); i++)
 		{
-			std::cout << "shape[" << i << "][" << tempnum << "] = " << a_piece.GetShape()[i][tempnum] << std::endl;
+//			std::cout << "shape[" << i << "][" << tempnum << "] = " << a_piece.GetShape()[i][tempnum] << std::endl;
 			if (a_piece.GetShape()[i][tempnum] == 1)
+			{
+				return false;
+			}
+		}
+//		std::cout << std::endl;
+	}
+
+	// now loop through and see if there are any pieces in the way
+	for (int i = a_piece.GetCoords().x, k = 0; k < a_piece.GetLength(); i++, k++)
+	{	
+		for (int j = a_piece.GetCoords().y + 1, q = 0; q < a_piece.GetLength(); j++, q++)
+		{
+			if (i < 0) i = 0;
+			else if (i > board.GetBoardWidth() - 1) i = board.GetBoardWidth() - 1;
+			
+			if (j < 0) j = 0;
+			else if (j > board.GetBoardHeight() - 1) j = board.GetBoardHeight() - 1;
+			
+			//std::cout << a_piece.GetShape()[k][q];
+			std::cout << board.board[i][j];
+			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
 			{
 				return false;
 			}
 		}
 		std::cout << std::endl;
 	}
-
-	// now loop through and see if there are any pieces in the way
-	for (int i = a_piece.GetCoords().x - 1, k = 0; k < a_piece.GetLength(); i++, k++)
-	{	
-		for (int j = a_piece.GetCoords().y - 1, q = 0; q < a_piece.GetLength(); j++, q++)
-		{
-			//std::cout << a_piece.shape[q][k];
-			if (a_piece.GetShape()[q][k] == 1 && board.board[j][i] == 1)
-			{
-				return false;
-			}
-		}
-		//std::cout << std::endl;
-	}
-	//std::cout << std::endl;
+	std::cout << std::endl;
 
 	return true;
 }
@@ -434,7 +441,7 @@ void TetrisGame::GameLoop()
 					CreateNewPiece();
 				}
 
-				std::cout << currentPiece->GetCoords().x << " " << currentPiece->GetCoords().y << std::endl;
+				//std::cout << currentPiece->GetCoords().x << " " << currentPiece->GetCoords().y << std::endl;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
