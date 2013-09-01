@@ -373,20 +373,15 @@ void TetrisGame::GameLoop()
 
 		_mainWindow.display();
 
-		if (board.isFull())
+		if (board.isFull())	// check if any pieces are at the top of the board
 		{
 			_gameState = TetrisGame::Exiting;
 		}
 
-		/*for (std::list<sf::Sprite*>::iterator it = spriteList.begin(); it != spriteList.end(); it++)
+		for (int i = 0; i < board.GetBoardHeight(); i++)	// check if any rows are completed
 		{
-			delete (*it);
-			(*it) = NULL;
-		}*/
-
-		//spriteList.clear();
-		//_mainWindow.draw(_blockSprite);
-		//_mainWindow.display();
+			std::cout << "row: " << i << " = " << board.CheckRow(i) << std::endl;
+		}
 
 		if (event.type == sf::Event::Closed)
 		{

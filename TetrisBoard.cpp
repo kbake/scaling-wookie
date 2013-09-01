@@ -71,7 +71,7 @@ int TetrisBoard::CheckRow(int row) const	// checks a given row, returning the ro
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
-		if (board[row][i] == 0)
+		if (board[i][row] == 0)
 		{
 			return -1;
 		}
