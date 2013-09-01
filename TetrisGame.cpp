@@ -373,6 +373,11 @@ void TetrisGame::GameLoop()
 
 		_mainWindow.display();
 
+		if (board.isFull())
+		{
+			_gameState = TetrisGame::Exiting;
+		}
+
 		/*for (std::list<sf::Sprite*>::iterator it = spriteList.begin(); it != spriteList.end(); it++)
 		{
 			delete (*it);
@@ -385,7 +390,7 @@ void TetrisGame::GameLoop()
 
 		if (event.type == sf::Event::Closed)
 		{
-			_gameState = TetrisGame::Exiting;
+			_gameState = GameState::Exiting;
 		}
 
 		if (event.type == sf::Event::KeyPressed)

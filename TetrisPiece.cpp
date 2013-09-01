@@ -80,7 +80,7 @@ int** TetrisPiece::GetShape() const
 	return shape;
 }
 
-sf::Texture TetrisPiece::GetTexture() const
+const sf::Texture& TetrisPiece::GetTexture() const
 {
 	return texture;
 }

@@ -15,6 +15,7 @@ public:
 
 	void AddPiece(TetrisPiece&);
 	
+	bool isFull() const;
 	int CheckRow(int) const;
 	void DeleteRow(int);
 

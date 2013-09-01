@@ -10,7 +10,7 @@ public:
 	sf::Vector2i GetCoords() const;
 	int GetLength() const;
 	int** GetShape() const;
-	sf::Texture GetTexture() const;
+	const sf::Texture& GetTexture() const;
 
 	void SetTexture(sf::Texture&);
 	void SetLength(int);

@@ -34,7 +34,7 @@ void TetrisBoard::SetTexture(sf::Texture& t)
 	_texture = t;
 }
 
-void TetrisBoard::AddPiece(TetrisPiece& a_piece)
+void TetrisBoard::AddPiece(TetrisPiece& a_piece)	// adds a piece to the board based on the pieces location and size and such
 {
 	int lengthX = a_piece.GetLength() + a_piece.GetCoords().x,
 		lengthY = a_piece.GetLength() + a_piece.GetCoords().y;
@@ -54,7 +54,20 @@ void TetrisBoard::AddPiece(TetrisPiece& a_piece)
 	}
 }
 
-int TetrisBoard::CheckRow(int row) const
+bool TetrisBoard::isFull() const	// check if the top row has a piece in it...if so, game over man, game over
+{
+	for (int i = 0; i < BOARD_WIDTH; i++)
+	{
+		if (board[i][0] == 1)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+int TetrisBoard::CheckRow(int row) const	// checks a given row, returning the row's index if it is full
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
@@ -67,7 +80,7 @@ int TetrisBoard::CheckRow(int row) const
 	return row;
 }
 
-void TetrisBoard::DeleteRow(int row)
+void TetrisBoard::DeleteRow(int row)		// deletes (changes to 0) a given row's contents
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
