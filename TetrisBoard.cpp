@@ -71,12 +71,13 @@ int TetrisBoard::CheckRow(int row) const	// checks a given row, returning the ro
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
+//		std::cout << "[" << i << "][" << row << "]=" << board[i][row] << std::endl;
 		if (board[i][row] == 0)
 		{
 			return -1;
 		}
 	}
-
+//	std::cout << std::endl;
 	return row;
 }
 
@@ -84,7 +85,7 @@ void TetrisBoard::DeleteRow(int row)		// deletes (changes to 0) a given row's co
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
-		board[row][i] = 0;
+		board[i][row] = 0;
 	}
 }
 

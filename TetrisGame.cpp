@@ -378,9 +378,27 @@ void TetrisGame::GameLoop()
 			_gameState = TetrisGame::Exiting;
 		}
 
+		// temp for tempness
+		std::vector<int> temp_nums;
+
 		for (int i = 0; i < board.GetBoardHeight(); i++)	// check if any rows are completed
 		{
-			std::cout << "row: " << i << " = " << board.CheckRow(i) << std::endl;
+			//std::cout << "row: " << i << " = " << board.CheckRow(i) << std::endl;
+			int blah = board.CheckRow(i);
+
+			if (blah != -1)
+			{
+				temp_nums.push_back(blah);
+			}
+		}
+
+		if (temp_nums.size() > 0)
+		{
+			for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
+			{
+				board.DeleteRow(temp_nums.back());
+				temp_nums.pop_back();
+			}
 		}
 
 		if (event.type == sf::Event::Closed)
