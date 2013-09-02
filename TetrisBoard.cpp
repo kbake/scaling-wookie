@@ -89,6 +89,25 @@ void TetrisBoard::DeleteRow(int row)		// deletes (changes to 0) a given row's co
 	}
 }
 
+// move all rows above the given row
+void TetrisBoard::MoveRows(int bottomRow)
+{
+	if (bottomRow != 0)	// ignore top row (just in case)
+	{
+		for (int i = bottomRow; i > 0; i--)
+		{
+			for (int j = 0; j < BOARD_WIDTH; j++)
+			{
+				if (board[j][i] == 1 && board[j][i+1] != 1)	// if the piece can move down
+				{
+					board[j][i+1] = 1;
+					board[j][i] = 0;
+				}
+			}
+		}
+	}
+}
+
 void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 {
 	sf::Sprite* temp;

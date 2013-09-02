@@ -18,7 +18,7 @@ public:
 	bool isFull() const;
 	int CheckRow(int) const;
 	void DeleteRow(int);
-	void MoveRow(int);
+	void MoveRows(int);
 
 	void Draw(sf::RenderWindow&);	// would be nice to just create these sprites once, instead of every frame, should be easy
 

@@ -396,9 +396,11 @@ void TetrisGame::GameLoop()
 		{
 			for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
 			{
-				board.DeleteRow(temp_nums.back());
-				temp_nums.pop_back();
+				board.DeleteRow(temp_nums[i]);
+				board.MoveRows(temp_nums[i]);
 			}
+
+			temp_nums.clear();
 		}
 
 		if (event.type == sf::Event::Closed)
