@@ -94,13 +94,13 @@ void TetrisBoard::MoveRows(int bottomRow)
 {
 	if (bottomRow != 0)	// ignore top row (just in case)
 	{
-		for (int i = bottomRow; i > 0; i--)
+		for (int i = bottomRow; i > 0; i--)	// this goes bottom-up (as opposed to top-down)
 		{
 			for (int j = 0; j < BOARD_WIDTH; j++)
 			{
-				if (board[j][i] == 1 && board[j][i+1] != 1)	// if the piece can move down
+				if (board[j][i] != 0 && board[j][i+1] != 1)	// if the piece can move down
 				{
-					board[j][i+1] = 1;
+					board[j][i+1] = board[j][i];
 					board[j][i] = 0;
 				}
 			}
