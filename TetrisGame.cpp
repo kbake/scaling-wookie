@@ -2,6 +2,7 @@
 #include "TetrisGame.h"
 #include "TetrisBoard.h"
 #include "TetrisPiece.h"
+#include "PreviewBox.h"
 
 
 TetrisGame::TetrisGame(void) :
@@ -128,8 +129,14 @@ void TetrisGame::Start()
 	_pieces[4] = tp;
 	_pieces[5] = zp;
 
-	int random = rand() % 6;
-	currentPiece = new TetrisPiece(_pieces[random]);
+	currentPiece = new TetrisPiece(_pieces[rand() % 6]);
+	nextPiece = new TetrisPiece(_pieces[rand() % 6]);
+
+	_previewBox = new PreviewBox();
+	_previewBox->SetLocation(sf::Vector2i(500, 100));
+	_previewBox->SetSize(sf::Vector2i(5, 5));
+	_previewBox->SetTexture(_blockTexture);
+	_previewBox->SetPiece(*nextPiece);
 
 	board.SetTexture(_blockTexture);
 
@@ -144,10 +151,12 @@ void TetrisGame::CreateNewPiece()
 	delete currentPiece;
 	currentPiece = NULL;
 
-	int random = rand() % 6;
-
-	currentPiece = new TetrisPiece(_pieces[random]);
+	currentPiece = nextPiece;
 	currentPiece->SetCoords(sf::Vector2i(0, 0));
+
+	nextPiece = new TetrisPiece(_pieces[rand() % 6]);
+
+	_previewBox->SetPiece(*nextPiece);
 }
 
 bool TetrisGame::canRotate(TetrisPiece& a_piece)
@@ -370,6 +379,7 @@ void TetrisGame::GameLoop()
 
 		board.Draw(_mainWindow);
 		currentPiece->Draw(_mainWindow);
+		_previewBox->Draw(_mainWindow);
 
 		_mainWindow.display();
 
