@@ -65,7 +65,6 @@ void TetrisGame::Start()
 	};
 */
 
-
 	TetrisPiece bp;
 	bp.SetTexture(_blockTexture);
 	bp.SetLength(2);
@@ -93,7 +92,6 @@ void TetrisGame::Start()
 	};
 */
 
-
 	TetrisPiece tp;
 	tp.SetTexture(_blockTexture);
 	tp.SetLength(3);
@@ -107,7 +105,6 @@ void TetrisGame::Start()
 	{0, 0, 0}
 	};
 */
-
 
 	TetrisPiece zp;
 	zp.SetTexture(_blockTexture);
