@@ -97,7 +97,12 @@ void TetrisPiece::SetLength(int len)
 	initializeShape();
 }
 
-void TetrisPiece::SetCoords(sf::Vector2i vec)
+void TetrisPiece::SetCoords(sf::Vector2i coord)
+{
+	coords = coord;
+}
+
+void TetrisPiece::IncrementCoords(sf::Vector2i vec)
 {
 	coords.x += vec.x;
 	coords.y += vec.y;

@@ -133,8 +133,8 @@ void TetrisGame::Start()
 	nextPiece = new TetrisPiece(_pieces[rand() % 6]);
 
 	_previewBox = new PreviewBox();
-	_previewBox->SetLocation(sf::Vector2i(500, 100));
-	_previewBox->SetSize(sf::Vector2i(5, 5));
+	_previewBox->SetLocation(sf::Vector2i(500, 20));
+	_previewBox->SetSize(sf::Vector2i(6, 5));
 	_previewBox->SetTexture(_blockTexture);
 	_previewBox->SetPiece(*nextPiece);
 
@@ -152,7 +152,7 @@ void TetrisGame::CreateNewPiece()
 	currentPiece = NULL;
 
 	currentPiece = nextPiece;
-	currentPiece->SetCoords(sf::Vector2i(0, 0));
+	//currentPiece->SetCoords(sf::Vector2i(4, 0));
 
 	nextPiece = new TetrisPiece(_pieces[rand() % 6]);
 
@@ -429,7 +429,7 @@ void TetrisGame::GameLoop()
 				//_blockSprite.move(32.f, 0.f);
 				if (canMoveRight(*currentPiece)) 
 				{
-					currentPiece->SetCoords(sf::Vector2i(1, 0));
+					currentPiece->IncrementCoords(sf::Vector2i(1, 0));
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -437,18 +437,18 @@ void TetrisGame::GameLoop()
 				//_blockSprite.move(-32.f, 0.f);
 				if (canMoveLeft(*currentPiece))
 				{
-					currentPiece->SetCoords(sf::Vector2i(-1, 0));
+					currentPiece->IncrementCoords(sf::Vector2i(-1, 0));
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				currentPiece->SetCoords(sf::Vector2i(0, -1));
+				currentPiece->IncrementCoords(sf::Vector2i(0, -1));
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
 				if (canMoveDown(*currentPiece))
 				{
-					currentPiece->SetCoords(sf::Vector2i(0, 1));
+					currentPiece->IncrementCoords(sf::Vector2i(0, 1));
 				}
 				else
 				{

@@ -18,6 +18,7 @@ public:
 
 	void Rotate();
 
+	void IncrementCoords(sf::Vector2i);
 	void Draw(sf::RenderWindow&);
 
 private:
