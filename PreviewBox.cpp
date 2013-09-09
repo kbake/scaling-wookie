@@ -20,8 +20,6 @@ void PreviewBox::SetPiece(TetrisPiece& a_piece)
 	_nextPiece = a_piece;
 
 	_nextPiece.SetCoords(sf::Vector2i(17, 2));
-
-	std::cout << _nextPiece.GetCoords().x << ", " << _nextPiece.GetCoords().y << std::endl;
 }
 
 void PreviewBox::SetTexture(sf::Texture& texture)

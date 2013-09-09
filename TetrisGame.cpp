@@ -252,6 +252,7 @@ bool TetrisGame::canMoveRight(TetrisPiece& a_piece)
 //			std::cout << std::endl << "blah " << a_piece.length - 1 << std::endl;
 			if (a_piece.GetShape()[a_piece.GetLength() - 1 - (size - board.GetBoardWidth())][i] == 1)
 			{
+				std::cout << std::endl << "right: outside board boundaries" << std::endl;
 				return false;
 			}
 		}
@@ -267,6 +268,7 @@ bool TetrisGame::canMoveRight(TetrisPiece& a_piece)
 			//std::cout << a_piece.shape[q][k];
 			if (a_piece.GetShape()[q][k] == 1 && board.board[j][i] == 1)
 			{
+				std::cout << std::endl << "right: piece in the way" << std::endl;
 				return false;
 			}
 		}
@@ -286,13 +288,14 @@ bool TetrisGame::canMoveLeft(TetrisPiece& a_piece)
 	{
 		for (int i = 0; i < a_piece.GetLength(); i++)
 		{
-			std::cout << "shape[" << abs(a_piece.GetCoords().x) << "][" << i << "] = " << a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] << std::endl;
+			//std::cout << "shape[" << abs(a_piece.GetCoords().x) << "][" << i << "] = " << a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] << std::endl;
 			if (a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] == 1)
 			{
+				std::cout << std::endl << "left: outside board boundaries" << std::endl;
 				return false;
 			}
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
 
 	// now loop through and see if there are any pieces in the way
@@ -303,6 +306,7 @@ bool TetrisGame::canMoveLeft(TetrisPiece& a_piece)
 //			std::cout << a_piece.shape[q][k];
 			if (a_piece.GetShape()[q][k] == 1 && board.board[j][i] == 1)
 			{
+				std::cout << std::endl << "left: pieces in the way" << std::endl;
 				return false;
 			}
 		}
@@ -327,6 +331,7 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 //			std::cout << "shape[" << i << "][" << tempnum << "] = " << a_piece.GetShape()[i][tempnum] << std::endl;
 			if (a_piece.GetShape()[i][tempnum] == 1)
 			{
+				std::cout << std::endl << "down: outside board boundaries" << std::endl;
 				return false;
 			}
 		}
@@ -344,10 +349,11 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 			if (j < 0) j = 0;
 			else if (j > board.GetBoardHeight() - 1) j = board.GetBoardHeight() - 1;
 			
-			//std::cout << a_piece.GetShape()[k][q];
+			std::cout << a_piece.GetShape()[k][q];
 			std::cout << board.board[i][j];
 			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
 			{
+				std::cout << std::endl << "down: pieces in the way" << std::endl;
 				return false;
 			}
 		}

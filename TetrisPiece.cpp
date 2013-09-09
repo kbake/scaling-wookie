@@ -126,19 +126,19 @@ void TetrisPiece::Rotate()
 {
 	int size = length;
 	int** temp = new int*[size];
-	std::cout << "Before:" << std::endl;
+//	std::cout << "Before:" << std::endl;
 	for (int k = 0; k < size; k++)
 	{
 		temp[k] = new int[size];
 		for (int l = 0; l < size; l++)
 		{
-			std::cout << shape[l][k];
+//			std::cout << shape[l][k];
 			temp[k][l] = 0;
 		}
 
-		std::cout << std::endl;
+//		std::cout << std::endl;
 	}
-	std::cout << std::endl;
+//	std::cout << std::endl;
 	// rotate the piece 90 degrees clockwise
 	for (int i = 0; i < size; i++)
 	{
@@ -158,17 +158,17 @@ void TetrisPiece::Rotate()
 
 	shape = &(*temp);
 
-	std::cout << "After:" << std::endl;
+//	std::cout << "After:" << std::endl;
 	for (int i = 0; i < length; i++)
 	{
 		for (int j = 0; j < length; j++)
 		{
-			std::cout << shape[j][i];
+//			std::cout << shape[j][i];
 		}
-		std::cout << std::endl;
+//		std::cout << std::endl;
 	}
 
-	std::cout << std::endl;
+//	std::cout << std::endl;
 }
 
 void TetrisPiece::Draw(sf::RenderWindow& renderWindow)
