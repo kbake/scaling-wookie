@@ -265,10 +265,12 @@ bool TetrisGame::canMoveRight(TetrisPiece& a_piece)
 	{
 		if (i > board.GetBoardWidth()) continue;
 
-		for (int j = a_piece.GetCoords().y + 1, q = 0; q < a_piece.GetLength(); j++, q++)
+		for (int j = a_piece.GetCoords().y, q = 0; q < a_piece.GetLength(); j++, q++)
 		{
 			if (j > board.GetBoardHeight()) continue;
-			//std::cout << a_piece.shape[q][k];
+
+			//std::cout << a_piece.GetShape()[k][q];
+			//std::cout << board.board[i][j];
 			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
 			{
 				std::cout << std::endl << "right: piece in the way" << std::endl;
@@ -306,7 +308,7 @@ bool TetrisGame::canMoveLeft(TetrisPiece& a_piece)
 	{
 		if (i < 0) continue;
 
-		for (int j = a_piece.GetCoords().y - 1, q = 0; q < a_piece.GetLength(); j++, q++)
+		for (int j = a_piece.GetCoords().y, q = 0; q < a_piece.GetLength(); j++, q++)
 		{
 			if (j < 0) continue;
 //			std::cout << a_piece.shape[q][k];
