@@ -340,13 +340,13 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 
 	// now loop through and see if there are any pieces in the way
 	for (int i = a_piece.GetCoords().x, k = 0; k < a_piece.GetLength(); i++, k++)
-	{	
+	{
+		if (i < 0) continue;
+		else if (i > board.GetBoardWidth() - 1) i = board.GetBoardWidth() - 1;
+
 		for (int j = a_piece.GetCoords().y + 1, q = 0; q < a_piece.GetLength(); j++, q++)
-		{
-			if (i < 0) i = 0;
-			else if (i > board.GetBoardWidth() - 1) i = board.GetBoardWidth() - 1;
-			
-			if (j < 0) j = 0;
+		{			
+			if (j < 0) continue;
 			else if (j > board.GetBoardHeight() - 1) j = board.GetBoardHeight() - 1;
 			
 			std::cout << a_piece.GetShape()[k][q];
