@@ -262,11 +262,14 @@ bool TetrisGame::canMoveRight(TetrisPiece& a_piece)
 
 	// now loop through and see if there are any pieces in the way
 	for (int i = a_piece.GetCoords().x + 1, k = 0; k < a_piece.GetLength(); i++, k++)
-	{	
+	{
+		if (i > board.GetBoardWidth()) continue;
+
 		for (int j = a_piece.GetCoords().y + 1, q = 0; q < a_piece.GetLength(); j++, q++)
 		{
+			if (j > board.GetBoardHeight()) continue;
 			//std::cout << a_piece.shape[q][k];
-			if (a_piece.GetShape()[q][k] == 1 && board.board[j][i] == 1)
+			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
 			{
 				std::cout << std::endl << "right: piece in the way" << std::endl;
 				return false;
@@ -300,11 +303,14 @@ bool TetrisGame::canMoveLeft(TetrisPiece& a_piece)
 
 	// now loop through and see if there are any pieces in the way
 	for (int i = a_piece.GetCoords().x - 1, k = 0; k < a_piece.GetLength(); i++, k++)
-	{	
+	{
+		if (i < 0) continue;
+
 		for (int j = a_piece.GetCoords().y - 1, q = 0; q < a_piece.GetLength(); j++, q++)
 		{
+			if (j < 0) continue;
 //			std::cout << a_piece.shape[q][k];
-			if (a_piece.GetShape()[q][k] == 1 && board.board[j][i] == 1)
+			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
 			{
 				std::cout << std::endl << "left: pieces in the way" << std::endl;
 				return false;
@@ -349,17 +355,17 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 			if (j < 0) continue;
 			else if (j > board.GetBoardHeight() - 1) j = board.GetBoardHeight() - 1;
 			
-			std::cout << a_piece.GetShape()[k][q];
-			std::cout << board.board[i][j];
+			//std::cout << a_piece.GetShape()[k][q];
+			//std::cout << board.board[i][j];
 			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
 			{
 				std::cout << std::endl << "down: pieces in the way" << std::endl;
 				return false;
 			}
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
-	std::cout << std::endl;
+	//std::cout << std::endl;
 
 	return true;
 }
