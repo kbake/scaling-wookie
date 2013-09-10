@@ -3,6 +3,7 @@
 #include "TetrisBoard.h"
 
 class PreviewBox;
+class ScoreBoard;
 
 class TetrisGame
 {
@@ -42,6 +43,7 @@ private:
 	TetrisPiece* nextPiece;
 
 	PreviewBox* _previewBox;
+	ScoreBoard* _scoreBoard;
 
 	void CreateNewPiece();
 

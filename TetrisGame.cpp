@@ -3,6 +3,7 @@
 #include "TetrisBoard.h"
 #include "TetrisPiece.h"
 #include "PreviewBox.h"
+#include "ScoreBoard.h"
 
 
 TetrisGame::TetrisGame(void) :
@@ -20,6 +21,18 @@ TetrisGame::~TetrisGame(void)
 	{
 		delete currentPiece;
 		currentPiece = NULL;
+	}
+
+	if (nextPiece)
+	{
+		delete nextPiece;
+		nextPiece = NULL;
+	}
+
+	if (_previewBox)
+	{
+		delete _previewBox;
+		_previewBox = NULL;
 	}
 }
 
@@ -134,6 +147,10 @@ void TetrisGame::Start()
 	_previewBox->SetSize(sf::Vector2i(6, 5));
 	_previewBox->SetTexture(_blockTexture);
 	_previewBox->SetPiece(*nextPiece);
+
+	_scoreBoard = new ScoreBoard(sf::Vector2f(500, 200), sf::Vector2f(6, 2));
+	_scoreBoard->SetTexture(_blockTexture);
+	_scoreBoard->SetFont("fonts/arial.ttf");
 
 	board.SetTexture(_blockTexture);
 
@@ -391,6 +408,7 @@ void TetrisGame::GameLoop()
 		board.Draw(_mainWindow);
 		currentPiece->Draw(_mainWindow);
 		_previewBox->Draw(_mainWindow);
+		_scoreBoard->Draw(_mainWindow);
 
 		_mainWindow.display();
 
@@ -420,6 +438,9 @@ void TetrisGame::GameLoop()
 				board.DeleteRow(temp_nums[i]);
 				board.MoveRows(temp_nums[i]);
 			}
+
+			// add score based off size
+			_scoreBoard->SetScore(100 * temp_nums.size());
 
 			temp_nums.clear();
 		}
