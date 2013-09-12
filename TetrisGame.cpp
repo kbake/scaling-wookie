@@ -151,6 +151,7 @@ void TetrisGame::Start()
 	_scoreBoard = new ScoreBoard(sf::Vector2f(500, 200), sf::Vector2f(6, 2));
 	_scoreBoard->SetTexture(_blockTexture);
 	_scoreBoard->SetFont("fonts/arial.ttf");
+	_scoreBoard->SetScore(0);
 
 	board.SetTexture(_blockTexture);
 
@@ -440,7 +441,7 @@ void TetrisGame::GameLoop()
 			}
 
 			// add score based off size
-			_scoreBoard->SetScore(100 * temp_nums.size());
+			_scoreBoard->SetScore(pow(10, temp_nums.size()));
 
 			temp_nums.clear();
 		}
