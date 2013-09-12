@@ -15,6 +15,7 @@ TetrisPiece::TetrisPiece(const TetrisPiece& tp)
 		coords = tp.GetCoords();
 		length = tp.GetLength();
 		texture = tp.GetTexture();
+		color = tp.GetColor();
 
 		initializeShape();
 
@@ -35,6 +36,7 @@ TetrisPiece& TetrisPiece::operator=(const TetrisPiece& tp)
 		coords = tp.GetCoords();
 		length = tp.GetLength();
 		texture = tp.GetTexture();
+		color = tp.GetColor();
 
 		initializeShape();
 
@@ -75,6 +77,11 @@ int TetrisPiece::GetLength() const
 	return length;
 }
 
+const sf::Color& TetrisPiece::GetColor() const
+{
+	return color;
+}
+
 int** TetrisPiece::GetShape() const
 {
 	return shape;
@@ -100,6 +107,11 @@ void TetrisPiece::SetLength(int len)
 void TetrisPiece::SetCoords(sf::Vector2i coord)
 {
 	coords = coord;
+}
+
+void TetrisPiece::SetColor(sf::Color col)
+{
+	color = col;
 }
 
 void TetrisPiece::IncrementCoords(sf::Vector2i vec)
@@ -184,7 +196,7 @@ void TetrisPiece::Draw(sf::RenderWindow& renderWindow)
 					temp = new sf::Sprite();
 					temp->setTexture(texture);
 					temp->setPosition(32.f * x + (coords.x * 32.f), 32.f * y + (coords.y * 32.f));
-					temp->setColor(sf::Color(0, 255, 0));
+					temp->setColor(color);
 
 					renderWindow.draw(*temp);
 

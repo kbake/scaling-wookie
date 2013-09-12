@@ -11,10 +11,12 @@ public:
 	int GetLength() const;
 	int** GetShape() const;
 	const sf::Texture& GetTexture() const;
+	const sf::Color& GetColor() const;
 
 	void SetTexture(sf::Texture&);
 	void SetLength(int);
 	void SetCoords(sf::Vector2i);
+	void SetColor(sf::Color);
 
 	void Rotate();
 
@@ -26,6 +28,7 @@ private:
 
 	sf::Texture texture;
 	sf::Vector2i coords;
+	sf::Color color;
 	int length;
 	int** shape;
 };

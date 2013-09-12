@@ -58,6 +58,7 @@ void TetrisGame::Start()
 	*/
 	ip.SetTexture(_blockTexture);
 	ip.SetLength(4);
+	ip.SetColor(sf::Color(100, 30, 150));
 	ip.GetShape()[0][1] = 1;
 	ip.GetShape()[1][1] = 1;
 	ip.GetShape()[2][1] = 1;
@@ -67,6 +68,7 @@ void TetrisGame::Start()
 	TetrisPiece jp;
 	jp.SetTexture(_blockTexture);
 	jp.SetLength(3);
+	jp.SetColor(sf::Color(12, 200, 120));
 	jp.GetShape()[0][2] = 1;
 	jp.GetShape()[1][0] = 1;
 	jp.GetShape()[1][1] = 1;
@@ -81,6 +83,7 @@ void TetrisGame::Start()
 	TetrisPiece bp;
 	bp.SetTexture(_blockTexture);
 	bp.SetLength(2);
+	bp.SetColor(sf::Color(255, 150, 100));
 	bp.GetShape()[0][0] = 1;
 	bp.GetShape()[0][1] = 1;
 	bp.GetShape()[1][0] = 1;
@@ -94,6 +97,7 @@ void TetrisGame::Start()
 	TetrisPiece sp;
 	sp.SetTexture(_blockTexture);
 	sp.SetLength(3);
+	sp.SetColor(sf::Color(0, 100, 255));
 	sp.GetShape()[0][1] = 1;
 	sp.GetShape()[0][2] = 1;
 	sp.GetShape()[1][0] = 1;
@@ -108,6 +112,7 @@ void TetrisGame::Start()
 	TetrisPiece tp;
 	tp.SetTexture(_blockTexture);
 	tp.SetLength(3);
+	tp.SetColor(sf::Color(0, 255, 0));
 	tp.GetShape()[0][1] = 1;
 	tp.GetShape()[1][0] = 1;
 	tp.GetShape()[1][1] = 1;
@@ -122,6 +127,7 @@ void TetrisGame::Start()
 	TetrisPiece zp;
 	zp.SetTexture(_blockTexture);
 	zp.SetLength(3);
+	zp.SetColor(sf::Color(255, 0, 0));
 	zp.GetShape()[0][0] = 1;
 	zp.GetShape()[0][1] = 1;
 	zp.GetShape()[1][1] = 1;
