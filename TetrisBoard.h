@@ -28,6 +28,8 @@ private:
 
 	sf::Texture _texture;
 
+	std::vector<sf::Sprite> _sprites;
+
 public:
 	int board[BOARD_WIDTH][BOARD_HEIGHT];	// I'd prefer not to make this public but I'm also lazy
 };

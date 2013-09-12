@@ -10,6 +10,11 @@ TetrisBoard::TetrisBoard(void)
 		for (int j = 0; j < BOARD_HEIGHT; j++)
 		{
 			board[i][j] = 0;
+			
+			//_sprites[i * BOARD_HEIGHT + j] = new sf::Sprite();
+			_sprites.push_back(sf::Sprite());
+			_sprites[i * BOARD_HEIGHT + j].setColor(sf::Color::Black);
+			_sprites[i * BOARD_HEIGHT + j].setPosition(32.f * i, 32.f * j);
 		}
 	}
 }
@@ -32,6 +37,16 @@ int TetrisBoard::GetBoardHeight() const
 void TetrisBoard::SetTexture(sf::Texture& t)
 {
 	_texture = t;
+
+	std::vector<sf::Sprite>::iterator it = _sprites.begin();
+	std::vector<sf::Sprite>::iterator end = _sprites.end();
+
+	while (it != end)
+	{
+		(*it).setTexture(_texture);
+
+		it++;
+	}
 }
 
 void TetrisBoard::AddPiece(TetrisPiece& a_piece)	// adds a piece to the board based on the pieces location and size and such
@@ -48,6 +63,8 @@ void TetrisBoard::AddPiece(TetrisPiece& a_piece)	// adds a piece to the board ba
 				if (a_piece.GetShape()[k][n] == 1) 
 				{
 					board[i][j] = 1;
+
+					_sprites[i * BOARD_HEIGHT + j].setColor(a_piece.GetColor());
 				}
 			}
 		}
@@ -86,6 +103,8 @@ void TetrisBoard::DeleteRow(int row)		// deletes (changes to 0) a given row's co
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
 		board[i][row] = 0;
+
+		_sprites[i * BOARD_HEIGHT + row].setColor(sf::Color::Black);
 	}
 }
 
@@ -102,6 +121,9 @@ void TetrisBoard::MoveRows(int bottomRow)
 				{
 					board[j][i+1] = board[j][i];
 					board[j][i] = 0;
+
+					_sprites[j * BOARD_HEIGHT + (i+1)].setColor(_sprites[j * BOARD_HEIGHT + i].getColor());
+					_sprites[j * BOARD_HEIGHT + i].setColor(sf::Color::Black);
 				}
 			}
 		}
@@ -112,7 +134,17 @@ void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 {
 	sf::Sprite* temp;
 
-	for (int x = 0; x < BOARD_WIDTH; x++)
+	std::vector<sf::Sprite>::iterator it = _sprites.begin();
+	std::vector<sf::Sprite>::iterator end = _sprites.end();
+
+	while (it != end)
+	{
+		renderWindow.draw(*it);
+
+		it++;
+	}
+
+	/*for (int x = 0; x < BOARD_WIDTH; x++)
 	{
 		for (int y = 0; y < BOARD_HEIGHT; y++)
 		{
@@ -134,5 +166,5 @@ void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 			delete temp;
 			temp = NULL;
 		}
-	}
+	}*/
 }
