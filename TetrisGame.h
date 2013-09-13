@@ -4,6 +4,7 @@
 
 class PreviewBox;
 class ScoreBoard;
+class Timer;
 
 class TetrisGame
 {
@@ -19,6 +20,8 @@ public:
 private:
 	void GameLoop(float);
 	void DrawBoard();
+
+	double totalTimeElapsed;
 
 	sf::RenderWindow _mainWindow;
 
@@ -44,6 +47,8 @@ private:
 
 	PreviewBox* _previewBox;
 	ScoreBoard* _scoreBoard;
+
+	Timer* _timer;
 
 	void CreateNewPiece();
 

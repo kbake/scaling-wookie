@@ -4,11 +4,13 @@
 #include "TetrisPiece.h"
 #include "PreviewBox.h"
 #include "ScoreBoard.h"
+#include "Timer.h"
 
 
 TetrisGame::TetrisGame(void) :
 	_gameState(GameState::Playing),
-	_blockState(BlockState::Starting)
+	_blockState(BlockState::Starting),
+	totalTimeElapsed(0)
 {
 	// randomize currentPiece
 	srand(time(NULL));
@@ -33,6 +35,18 @@ TetrisGame::~TetrisGame(void)
 	{
 		delete _previewBox;
 		_previewBox = NULL;
+	}
+
+	if (_scoreBoard)
+	{
+		delete _scoreBoard;
+		_scoreBoard = NULL;
+	}
+
+	if (_timer)
+	{
+		delete timer;
+		timer = NULL;
 	}
 }
 
@@ -160,6 +174,13 @@ void TetrisGame::Start()
 	_scoreBoard->SetScore(0);
 
 	board.SetTexture(_blockTexture);
+
+	_timer = new Timer();
+	_timer->SetFont("fonts/arial.ttf");
+	_timer->SetText("00:00");
+	_timer->SetTexture(_blockTexture);
+	_timer->SetPosition(sf::Vector2f(500, 400));
+	_timer->SetSize(sf::Vector2f(6, 2));
 
 	sf::Clock clock;
 	sf::Time elapsed;
@@ -414,12 +435,16 @@ void TetrisGame::GameLoop(float timeDelta)
 	case TetrisGame::Paused:
 		break;
 	case TetrisGame::Playing:
+		totalTimeElapsed += timeDelta;
+		_timer->SetText(std::to_string(totalTimeElapsed));
+
 		_mainWindow.clear(sf::Color(0, 255, 255));
 
 		board.Draw(_mainWindow);
 		currentPiece->Draw(_mainWindow);
 		_previewBox->Draw(_mainWindow);
 		_scoreBoard->Draw(_mainWindow);
+		_timer->Draw(_mainWindow);
 
 		_mainWindow.display();
 
