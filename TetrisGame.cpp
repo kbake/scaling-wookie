@@ -10,7 +10,9 @@
 TetrisGame::TetrisGame(void) :
 	_gameState(GameState::Playing),
 	_blockState(BlockState::Starting),
-	totalTimeElapsed(0)
+	totalTimeElapsed(0),
+	tickSpeed(2),
+	tickTimeElapsed(0)
 {
 	// randomize currentPiece
 	srand(time(NULL));
@@ -45,8 +47,8 @@ TetrisGame::~TetrisGame(void)
 
 	if (_timer)
 	{
-		delete timer;
-		timer = NULL;
+		delete _timer;
+		_timer = NULL;
 	}
 }
 
@@ -438,6 +440,8 @@ void TetrisGame::GameLoop(float timeDelta)
 		totalTimeElapsed += timeDelta;
 		_timer->SetText(std::to_string(totalTimeElapsed));
 
+		tickTimeElapsed += timeDelta;
+
 		_mainWindow.clear(sf::Color(0, 255, 255));
 
 		board.Draw(_mainWindow);
@@ -537,6 +541,25 @@ void TetrisGame::GameLoop(float timeDelta)
 				}
 			}
 		}
+
+		if (tickTimeElapsed > tickSpeed)
+		{
+			tickTimeElapsed = 0;
+
+			if (canMoveDown(*currentPiece))
+			{
+				currentPiece->IncrementCoords(sf::Vector2i(0, 1));
+			}
+			else
+			{
+				// add current piece to the board (however I plan on doing that)
+				board.AddPiece(*currentPiece);
+
+				// create a new randomized piece at the top of the screen
+				CreateNewPiece();
+			}
+		}
+
 		break;
 	}
 }

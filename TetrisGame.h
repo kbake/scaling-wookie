@@ -22,6 +22,8 @@ private:
 	void DrawBoard();
 
 	double totalTimeElapsed;
+	float tickSpeed;
+	float tickTimeElapsed;
 
 	sf::RenderWindow _mainWindow;
 
