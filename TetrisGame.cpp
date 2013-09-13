@@ -161,9 +161,13 @@ void TetrisGame::Start()
 
 	board.SetTexture(_blockTexture);
 
+	sf::Clock clock;
+	sf::Time elapsed;
+
 	while (!IsExiting())
 	{
-		GameLoop();
+		elapsed = clock.restart();
+		GameLoop(elapsed.asSeconds());
 	}
 }
 
@@ -396,7 +400,7 @@ bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
 	return true;
 }
 
-void TetrisGame::GameLoop()
+void TetrisGame::GameLoop(float timeDelta)
 {
 	sf::Event event;
 	_mainWindow.pollEvent(event);

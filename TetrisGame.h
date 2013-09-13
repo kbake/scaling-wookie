@@ -17,7 +17,7 @@ public:
 	bool IsExiting();
 
 private:
-	void GameLoop();
+	void GameLoop(float);
 	void DrawBoard();
 
 	sf::RenderWindow _mainWindow;
