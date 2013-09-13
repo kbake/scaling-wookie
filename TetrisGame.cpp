@@ -11,7 +11,7 @@ TetrisGame::TetrisGame(void) :
 	_gameState(GameState::Playing),
 	_blockState(BlockState::Starting),
 	totalTimeElapsed(0),
-	tickSpeed(2),
+	tickSpeed(1),
 	tickTimeElapsed(0)
 {
 	// randomize currentPiece
@@ -512,10 +512,10 @@ void TetrisGame::GameLoop(float timeDelta)
 					currentPiece->IncrementCoords(sf::Vector2i(-1, 0));
 				}
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
 				currentPiece->IncrementCoords(sf::Vector2i(0, -1));
-			}
+			}*/
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
 				if (canMoveDown(*currentPiece))
