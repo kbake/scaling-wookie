@@ -84,6 +84,222 @@ bool TetrisBoard::isFull() const	// check if the top row has a piece in it...if 
 	return false;
 }
 
+bool TetrisBoard::canRotate(TetrisPiece& a_piece) const
+{
+	// make temp array to hold rotated piece
+	int** temp = new int*[a_piece.GetLength()];
+
+	for (int i = 0; i < a_piece.GetLength(); i++)
+	{
+		temp[i] = new int[a_piece.GetLength()];
+		for (int j = 0; j < a_piece.GetLength(); j++)
+		{
+			int tempint = (a_piece.GetLength() - 1) - i;
+			temp[i][j] = a_piece.GetShape()[j][tempint];
+		}
+	}
+
+	// check temp array vs right, left, and bottom areas to make sure it can rotate
+
+	// vs right
+	int size = a_piece.GetLength() + a_piece.GetCoords().x;
+
+	if (size > BOARD_WIDTH)
+	{
+		for (int i = 0; i < a_piece.GetLength(); i++)
+		{
+			if (temp[a_piece.GetLength() - 1 - (size - BOARD_WIDTH)][i] == 1)
+			{
+				return false;
+			}
+		}
+	}
+
+	// vs left
+	if (a_piece.GetCoords().x < 0)
+	{
+		for (int i = 0; i < a_piece.GetLength(); i++)
+		{
+			if (temp[abs(a_piece.GetCoords().x)][i] == 1)
+			{
+				return false;
+			}
+		}
+	}
+
+	// vs bottom
+	int location = a_piece.GetCoords().y + a_piece.GetLength();
+
+	if (location >= BOARD_HEIGHT)
+	{
+		int tempnum = (a_piece.GetLength() - 1) - (location - BOARD_HEIGHT);
+
+		for (int i = 0; i < a_piece.GetLength(); i++)
+		{
+			if (temp[i][tempnum] == 1)
+			{
+				return false;
+			}
+		}
+	}
+
+	// check temp array vs other pieces in the way
+	for (int i = a_piece.GetCoords().x, k = 0; i < size; i++, k++)
+	{
+		for (int j = a_piece.GetCoords().y, n = 0; j < size; j++, n++)
+		{
+			if (board[i][j] == 1 && temp[k][n] == 1)
+			{
+				return false;
+			}
+		}
+	}
+
+	// clean up the temp array and delete it
+	for (int i = 0; i < a_piece.GetLength(); i++)
+	{
+		delete [] temp[i];
+		temp[i] = NULL;
+	}
+
+	delete [] temp;
+	temp = NULL;
+
+	return true;
+}
+
+bool TetrisBoard::canMoveRight(TetrisPiece& a_piece) const
+{
+	int size = a_piece.GetLength() + a_piece.GetCoords().x;
+
+	// if we are going outside of the bounds of the board...
+	if (size >= BOARD_WIDTH)
+	{
+		for (int i = 0; i < a_piece.GetLength(); i++)
+		{
+//			std::cout << std::endl << "blah " << a_piece.length - 1 << std::endl;
+			if (a_piece.GetShape()[a_piece.GetLength() - 1 - (size - GetBoardWidth())][i] == 1)
+			{
+				std::cout << std::endl << "right: outside board boundaries" << std::endl;
+				return false;
+			}
+		}
+
+//		std::cout << std::endl;
+	}
+
+	// now loop through and see if there are any pieces in the way
+	for (int i = a_piece.GetCoords().x + 1, k = 0; k < a_piece.GetLength(); i++, k++)
+	{
+		if (i > BOARD_WIDTH) continue;
+
+		for (int j = a_piece.GetCoords().y, q = 0; q < a_piece.GetLength(); j++, q++)
+		{
+			if (j > BOARD_HEIGHT) continue;
+
+			//std::cout << a_piece.GetShape()[k][q];
+			//std::cout << board.board[i][j];
+			if (a_piece.GetShape()[k][q] == 1 && board[i][j] == 1)
+			{
+				std::cout << std::endl << "right: piece in the way" << std::endl;
+				return false;
+			}
+		}
+		//std::cout << std::endl;
+	}
+	//std::cout << std::endl;
+
+	return true;
+}
+
+bool TetrisBoard::canMoveLeft(TetrisPiece& a_piece) const
+{
+	int location = a_piece.GetCoords().x - 1;
+
+	// if we are going outside of the bounds of the board...
+	if (location < 0)
+	{
+		for (int i = 0; i < a_piece.GetLength(); i++)
+		{
+			//std::cout << "shape[" << abs(a_piece.GetCoords().x) << "][" << i << "] = " << a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] << std::endl;
+			if (a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] == 1)
+			{
+				std::cout << std::endl << "left: outside board boundaries" << std::endl;
+				return false;
+			}
+		}
+		//std::cout << std::endl;
+	}
+
+	// now loop through and see if there are any pieces in the way
+	for (int i = a_piece.GetCoords().x - 1, k = 0; k < a_piece.GetLength(); i++, k++)
+	{
+		if (i < 0) continue;
+
+		for (int j = a_piece.GetCoords().y, q = 0; q < a_piece.GetLength(); j++, q++)
+		{
+			if (j < 0) continue;
+//			std::cout << a_piece.shape[q][k];
+			if (a_piece.GetShape()[k][q] == 1 && board[i][j] == 1)
+			{
+				std::cout << std::endl << "left: pieces in the way" << std::endl;
+				return false;
+			}
+		}
+//		std::cout << std::endl;
+	}
+//	std::cout << std::endl;
+
+	return true;
+}
+
+bool TetrisBoard::canMoveDown(TetrisPiece& a_piece) const
+{
+	int location = a_piece.GetCoords().y + a_piece.GetLength() + 1;
+
+	// if we are going outside of the bounds of the board...
+	if (location >= BOARD_HEIGHT)
+	{
+		int tempnum = (a_piece.GetLength() - 1) - (location - BOARD_HEIGHT);
+
+		for (int i = 0; i < a_piece.GetLength(); i++)
+		{
+//			std::cout << "shape[" << i << "][" << tempnum << "] = " << a_piece.GetShape()[i][tempnum] << std::endl;
+			if (a_piece.GetShape()[i][tempnum] == 1)
+			{
+				std::cout << std::endl << "down: outside board boundaries" << std::endl;
+				return false;
+			}
+		}
+//		std::cout << std::endl;
+	}
+
+	// now loop through and see if there are any pieces in the way
+	for (int i = a_piece.GetCoords().x, k = 0; k < a_piece.GetLength(); i++, k++)
+	{
+		if (i < 0) continue;
+		else if (i > BOARD_WIDTH - 1) i = BOARD_WIDTH - 1;
+
+		for (int j = a_piece.GetCoords().y + 1, q = 0; q < a_piece.GetLength(); j++, q++)
+		{			
+			if (j < 0) continue;
+			else if (j > BOARD_HEIGHT - 1) j = BOARD_HEIGHT - 1;
+			
+			//std::cout << a_piece.GetShape()[k][q];
+			//std::cout << board.board[i][j];
+			if (a_piece.GetShape()[k][q] == 1 && board[i][j] == 1)
+			{
+				std::cout << std::endl << "down: pieces in the way" << std::endl;
+				return false;
+			}
+		}
+		//std::cout << std::endl;
+	}
+	//std::cout << std::endl;
+
+	return true;
+}
+
 int TetrisBoard::CheckRow(int row) const	// checks a given row, returning the row's index if it is full
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
@@ -127,6 +343,34 @@ void TetrisBoard::MoveRows(int bottomRow)
 				}
 			}
 		}
+	}
+}
+
+void TetrisBoard::Update(double deltaTime)
+{
+	// temp for tempness
+	std::vector<int> temp_nums;
+
+	for (int i = 0; i < BOARD_HEIGHT; i++)	// check if any rows are completed
+	{
+		//std::cout << "row: " << i << " = " << board.CheckRow(i) << std::endl;
+		int blah = CheckRow(i);
+
+		if (blah != -1)
+		{
+			temp_nums.push_back(blah);
+		}
+	}
+
+	if (temp_nums.size() > 0)
+	{
+		for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
+		{
+			DeleteRow(temp_nums[i]);
+			MoveRows(temp_nums[i]);
+		}
+
+		temp_nums.clear();
 	}
 }
 

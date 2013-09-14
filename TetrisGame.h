@@ -53,10 +53,5 @@ private:
 	Timer* _timer;
 
 	void CreateNewPiece();
-
-	bool canRotate(TetrisPiece&);
-	bool canMoveRight(TetrisPiece&);
-	bool canMoveLeft(TetrisPiece&);
-	bool canMoveDown(TetrisPiece&);
 };
 

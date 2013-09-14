@@ -207,222 +207,6 @@ void TetrisGame::CreateNewPiece()
 	_previewBox->SetPiece(*nextPiece);
 }
 
-bool TetrisGame::canRotate(TetrisPiece& a_piece)
-{
-	// make temp array to hold rotated piece
-	int** temp = new int*[a_piece.GetLength()];
-
-	for (int i = 0; i < a_piece.GetLength(); i++)
-	{
-		temp[i] = new int[a_piece.GetLength()];
-		for (int j = 0; j < a_piece.GetLength(); j++)
-		{
-			int tempint = (a_piece.GetLength() - 1) - i;
-			temp[i][j] = a_piece.GetShape()[j][tempint];
-		}
-	}
-
-	// check temp array vs right, left, and bottom areas to make sure it can rotate
-
-	// vs right
-	int size = a_piece.GetLength() + a_piece.GetCoords().x;
-
-	if (size > board.GetBoardWidth())
-	{
-		for (int i = 0; i < a_piece.GetLength(); i++)
-		{
-			if (temp[a_piece.GetLength() - 1 - (size - board.GetBoardWidth())][i] == 1)
-			{
-				return false;
-			}
-		}
-	}
-
-	// vs left
-	if (a_piece.GetCoords().x < 0)
-	{
-		for (int i = 0; i < a_piece.GetLength(); i++)
-		{
-			if (temp[abs(a_piece.GetCoords().x)][i] == 1)
-			{
-				return false;
-			}
-		}
-	}
-
-	// vs bottom
-	int location = a_piece.GetCoords().y + a_piece.GetLength();
-
-	if (location >= board.GetBoardHeight())
-	{
-		int tempnum = (a_piece.GetLength() - 1) - (location - board.GetBoardHeight());
-
-		for (int i = 0; i < a_piece.GetLength(); i++)
-		{
-			if (temp[i][tempnum] == 1)
-			{
-				return false;
-			}
-		}
-	}
-
-	// check temp array vs other pieces in the way
-	for (int i = a_piece.GetCoords().x, k = 0; i < size; i++, k++)
-	{
-		for (int j = a_piece.GetCoords().y, n = 0; j < size; j++, n++)
-		{
-			if (board.board[i][j] == 1 && temp[k][n] == 1)
-			{
-				return false;
-			}
-		}
-	}
-
-	// clean up the temp array and delete it
-	for (int i = 0; i < a_piece.GetLength(); i++)
-	{
-		delete [] temp[i];
-		temp[i] = NULL;
-	}
-
-	delete [] temp;
-	temp = NULL;
-
-	return true;
-}
-
-bool TetrisGame::canMoveRight(TetrisPiece& a_piece)
-{
-	int size = a_piece.GetLength() + a_piece.GetCoords().x;
-
-	// if we are going outside of the bounds of the board...
-	if (size >= board.GetBoardWidth())
-	{
-		for (int i = 0; i < a_piece.GetLength(); i++)
-		{
-//			std::cout << std::endl << "blah " << a_piece.length - 1 << std::endl;
-			if (a_piece.GetShape()[a_piece.GetLength() - 1 - (size - board.GetBoardWidth())][i] == 1)
-			{
-				std::cout << std::endl << "right: outside board boundaries" << std::endl;
-				return false;
-			}
-		}
-
-//		std::cout << std::endl;
-	}
-
-	// now loop through and see if there are any pieces in the way
-	for (int i = a_piece.GetCoords().x + 1, k = 0; k < a_piece.GetLength(); i++, k++)
-	{
-		if (i > board.GetBoardWidth()) continue;
-
-		for (int j = a_piece.GetCoords().y, q = 0; q < a_piece.GetLength(); j++, q++)
-		{
-			if (j > board.GetBoardHeight()) continue;
-
-			//std::cout << a_piece.GetShape()[k][q];
-			//std::cout << board.board[i][j];
-			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
-			{
-				std::cout << std::endl << "right: piece in the way" << std::endl;
-				return false;
-			}
-		}
-		//std::cout << std::endl;
-	}
-	//std::cout << std::endl;
-
-	return true;
-}
-
-bool TetrisGame::canMoveLeft(TetrisPiece& a_piece)
-{
-	int location = a_piece.GetCoords().x - 1;
-
-	// if we are going outside of the bounds of the board...
-	if (location < 0)
-	{
-		for (int i = 0; i < a_piece.GetLength(); i++)
-		{
-			//std::cout << "shape[" << abs(a_piece.GetCoords().x) << "][" << i << "] = " << a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] << std::endl;
-			if (a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] == 1)
-			{
-				std::cout << std::endl << "left: outside board boundaries" << std::endl;
-				return false;
-			}
-		}
-		//std::cout << std::endl;
-	}
-
-	// now loop through and see if there are any pieces in the way
-	for (int i = a_piece.GetCoords().x - 1, k = 0; k < a_piece.GetLength(); i++, k++)
-	{
-		if (i < 0) continue;
-
-		for (int j = a_piece.GetCoords().y, q = 0; q < a_piece.GetLength(); j++, q++)
-		{
-			if (j < 0) continue;
-//			std::cout << a_piece.shape[q][k];
-			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
-			{
-				std::cout << std::endl << "left: pieces in the way" << std::endl;
-				return false;
-			}
-		}
-//		std::cout << std::endl;
-	}
-//	std::cout << std::endl;
-
-	return true;
-}
-
-bool TetrisGame::canMoveDown(TetrisPiece& a_piece)
-{
-	int location = a_piece.GetCoords().y + a_piece.GetLength() + 1;
-
-	// if we are going outside of the bounds of the board...
-	if (location >= board.GetBoardHeight())
-	{
-		int tempnum = (a_piece.GetLength() - 1) - (location - board.GetBoardHeight());
-
-		for (int i = 0; i < a_piece.GetLength(); i++)
-		{
-//			std::cout << "shape[" << i << "][" << tempnum << "] = " << a_piece.GetShape()[i][tempnum] << std::endl;
-			if (a_piece.GetShape()[i][tempnum] == 1)
-			{
-				std::cout << std::endl << "down: outside board boundaries" << std::endl;
-				return false;
-			}
-		}
-//		std::cout << std::endl;
-	}
-
-	// now loop through and see if there are any pieces in the way
-	for (int i = a_piece.GetCoords().x, k = 0; k < a_piece.GetLength(); i++, k++)
-	{
-		if (i < 0) continue;
-		else if (i > board.GetBoardWidth() - 1) i = board.GetBoardWidth() - 1;
-
-		for (int j = a_piece.GetCoords().y + 1, q = 0; q < a_piece.GetLength(); j++, q++)
-		{			
-			if (j < 0) continue;
-			else if (j > board.GetBoardHeight() - 1) j = board.GetBoardHeight() - 1;
-			
-			//std::cout << a_piece.GetShape()[k][q];
-			//std::cout << board.board[i][j];
-			if (a_piece.GetShape()[k][q] == 1 && board.board[i][j] == 1)
-			{
-				std::cout << std::endl << "down: pieces in the way" << std::endl;
-				return false;
-			}
-		}
-		//std::cout << std::endl;
-	}
-	//std::cout << std::endl;
-
-	return true;
-}
-
 void TetrisGame::GameLoop(float timeDelta)
 {
 	sf::Event event;
@@ -444,6 +228,8 @@ void TetrisGame::GameLoop(float timeDelta)
 
 		_mainWindow.clear(sf::Color(0, 255, 255));
 
+		board.Update(timeDelta);
+
 		board.Draw(_mainWindow);
 		currentPiece->Draw(_mainWindow);
 		_previewBox->Draw(_mainWindow);
@@ -456,34 +242,9 @@ void TetrisGame::GameLoop(float timeDelta)
 		{
 			_gameState = TetrisGame::Exiting;
 		}
-
-		// temp for tempness
-		std::vector<int> temp_nums;
-
-		for (int i = 0; i < board.GetBoardHeight(); i++)	// check if any rows are completed
-		{
-			//std::cout << "row: " << i << " = " << board.CheckRow(i) << std::endl;
-			int blah = board.CheckRow(i);
-
-			if (blah != -1)
-			{
-				temp_nums.push_back(blah);
-			}
-		}
-
-		if (temp_nums.size() > 0)
-		{
-			for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
-			{
-				board.DeleteRow(temp_nums[i]);
-				board.MoveRows(temp_nums[i]);
-			}
-
-			// add score based off size
-			_scoreBoard->SetScore(pow(10, temp_nums.size()));
-
-			temp_nums.clear();
-		}
+		
+		// add score based off size
+		//_scoreBoard->SetScore(pow(10, temp_nums.size()));	need to implement the even system -_-
 
 		if (event.type == sf::Event::Closed)
 		{
@@ -499,7 +260,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				//_blockSprite.move(32.f, 0.f);
-				if (canMoveRight(*currentPiece)) 
+				if (board.canMoveRight(*currentPiece)) 
 				{
 					currentPiece->IncrementCoords(sf::Vector2i(1, 0));
 				}
@@ -507,7 +268,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				//_blockSprite.move(-32.f, 0.f);
-				if (canMoveLeft(*currentPiece))
+				if (board.canMoveLeft(*currentPiece))
 				{
 					currentPiece->IncrementCoords(sf::Vector2i(-1, 0));
 				}
@@ -518,7 +279,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			}*/
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				if (canMoveDown(*currentPiece))
+				if (board.canMoveDown(*currentPiece))
 				{
 					currentPiece->IncrementCoords(sf::Vector2i(0, 1));
 				}
@@ -535,7 +296,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				if (canRotate(*currentPiece))
+				if (board.canRotate(*currentPiece))
 				{
 					currentPiece->Rotate();
 				}
@@ -546,7 +307,7 @@ void TetrisGame::GameLoop(float timeDelta)
 		{
 			tickTimeElapsed = 0;
 
-			if (canMoveDown(*currentPiece))
+			if (board.canMoveDown(*currentPiece))
 			{
 				currentPiece->IncrementCoords(sf::Vector2i(0, 1));
 			}

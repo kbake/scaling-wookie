@@ -16,10 +16,17 @@ public:
 	void AddPiece(TetrisPiece&);
 	
 	bool isFull() const;
+
+	bool canRotate(TetrisPiece&) const;
+	bool canMoveRight(TetrisPiece&) const;
+	bool canMoveLeft(TetrisPiece&) const;
+	bool canMoveDown(TetrisPiece&) const;
+
 	int CheckRow(int) const;
 	void DeleteRow(int);
 	void MoveRows(int);
 
+	void Update(double);
 	void Draw(sf::RenderWindow&);	// would be nice to just create these sprites once, instead of every frame, should be easy
 
 private:
