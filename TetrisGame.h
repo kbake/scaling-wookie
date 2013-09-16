@@ -19,39 +19,30 @@ public:
 
 private:
 	void GameLoop(float);
-	void DrawBoard();
+	void CreateNewPiece();
 
 	double totalTimeElapsed;
 	float tickSpeed;
 	float tickTimeElapsed;
 
-	sf::RenderWindow _mainWindow;
-
-	TetrisBoard board;
-
-	sf::Vector2i _boardLocation;
-
 	std::list<sf::Sprite*> spriteList;
 
+	sf::RenderWindow _mainWindow;
 	sf::Texture _blockTexture;
 	sf::Sprite _blockSprite;
+	sf::Vector2i _boardLocation;
 
 	enum GameState { ShowingSplash, ShowingMenu, Playing, Paused, Exiting };
-	enum BlockState { Starting, Moving, Stopped };
 
 	GameState _gameState;
-	BlockState _blockState;
 
+	TetrisBoard board;
 	TetrisPiece _pieces[6];
 
 	TetrisPiece* currentPiece;
 	TetrisPiece* nextPiece;
-
 	PreviewBox* _previewBox;
 	ScoreBoard* _scoreBoard;
-
 	Timer* _timer;
-
-	void CreateNewPiece();
 };
 

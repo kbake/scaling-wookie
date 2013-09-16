@@ -9,7 +9,6 @@
 
 TetrisGame::TetrisGame(void) :
 	_gameState(GameState::Playing),
-	_blockState(BlockState::Starting),
 	totalTimeElapsed(0),
 	tickSpeed(1),
 	tickTimeElapsed(0)
