@@ -30,6 +30,9 @@ private:
 	sf::Texture texture;
 	sf::Vector2i coords;
 	sf::Color color;
+
+	std::vector<sf::Sprite> _sprites;
+
 	int length;
 	int** shape;
 };
