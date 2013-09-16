@@ -183,6 +183,11 @@ void TetrisPiece::Rotate()
 //	std::cout << std::endl;
 }
 
+void TetrisPiece::Update(double deltaTime)
+{
+
+}
+
 void TetrisPiece::Draw(sf::RenderWindow& renderWindow)
 {
 	sf::Sprite* temp;

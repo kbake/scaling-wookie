@@ -19,8 +19,9 @@ public:
 	void SetColor(sf::Color);
 
 	void Rotate();
-
 	void IncrementCoords(sf::Vector2i);
+	
+	void Update(double);
 	void Draw(sf::RenderWindow&);
 
 private:
