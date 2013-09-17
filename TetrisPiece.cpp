@@ -181,21 +181,21 @@ void TetrisPiece::Draw(sf::RenderWindow& renderWindow)
 	sf::Sprite* temp;
 
 	for (int x = 0; x < length; x++)
+	{
+		for (int y = 0; y < length; y++)
 		{
-			for (int y = 0; y < length; y++)
+			if (shape[x][y] != 0)
 			{
-				if (shape[x][y] != 0)
-				{
-					temp = new sf::Sprite();
-					temp->setTexture(texture);
-					temp->setPosition(32.f * x + (coords.x * 32.f), 32.f * y + (coords.y * 32.f));
-					temp->setColor(color);
+				temp = new sf::Sprite();
+				temp->setTexture(texture);
+				temp->setPosition(32.f * x + (coords.x * 32.f), 32.f * y + (coords.y * 32.f));
+				temp->setColor(color);
 
-					renderWindow.draw(*temp);
+				renderWindow.draw(*temp);
 
-					delete temp;
-					temp = NULL;
-				}
+				delete temp;
+				temp = NULL;
 			}
 		}
+	}
 }

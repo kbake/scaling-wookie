@@ -376,8 +376,6 @@ void TetrisBoard::Update(double deltaTime)
 
 void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 {
-	sf::Sprite* temp;
-
 	std::vector<sf::Sprite>::iterator it = _sprites.begin();
 	std::vector<sf::Sprite>::iterator end = _sprites.end();
 
