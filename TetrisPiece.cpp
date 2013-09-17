@@ -169,18 +169,6 @@ void TetrisPiece::Rotate()
 	delete [] shape;	// delete the dynamically created int* array
 
 	shape = &(*temp);
-
-//	std::cout << "After:" << std::endl;
-	for (int i = 0; i < length; i++)
-	{
-		for (int j = 0; j < length; j++)
-		{
-//			std::cout << shape[j][i];
-		}
-//		std::cout << std::endl;
-	}
-
-//	std::cout << std::endl;
 }
 
 void TetrisPiece::Update(double deltaTime)

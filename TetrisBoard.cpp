@@ -387,28 +387,4 @@ void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 
 		it++;
 	}
-
-	/*for (int x = 0; x < BOARD_WIDTH; x++)
-	{
-		for (int y = 0; y < BOARD_HEIGHT; y++)
-		{
-			temp = new sf::Sprite();
-			temp->setTexture(_texture);
-			temp->setPosition(32.f * x, 32.f * y);
-
-			if (board[x][y] != 0)
-			{
-				temp->setColor(sf::Color(15, 100, 200));
-			}
-			else
-			{
-				temp->setColor(sf::Color());
-			}
-
-			renderWindow.draw(*temp);
-			
-			delete temp;
-			temp = NULL;
-		}
-	}*/
 }
