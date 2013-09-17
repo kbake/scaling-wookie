@@ -92,7 +92,7 @@ void ScoreBoard::SetSize(sf::Vector2f size)
 
 void ScoreBoard::Update(double deltaTime)
 {
-
+	// check for events
 }
 
 void ScoreBoard::Draw(sf::RenderWindow& renderWindow)
