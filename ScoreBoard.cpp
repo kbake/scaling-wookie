@@ -90,6 +90,11 @@ void ScoreBoard::SetSize(sf::Vector2f size)
 	_size = size;
 }
 
+void ScoreBoard::Update(double deltaTime)
+{
+
+}
+
 void ScoreBoard::Draw(sf::RenderWindow& renderWindow)
 {
 	renderWindow.draw(_background);

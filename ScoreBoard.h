@@ -20,6 +20,7 @@ public:
 	void SetPosition(sf::Vector2f);
 	void SetSize(sf::Vector2f);
 
+	void Update(double);
 	void Draw(sf::RenderWindow&);
 
 private:
