@@ -175,6 +175,7 @@ void TetrisGame::Start()
 	_scoreBoard->SetScore(0);
 
 	board.SetTexture(_blockTexture);
+	board.SetScoreBoard(*_scoreBoard);
 
 	_timer = new Timer();
 	_timer->SetFont("fonts/arial.ttf");
@@ -182,6 +183,14 @@ void TetrisGame::Start()
 	_timer->SetTexture(_blockTexture);
 	_timer->SetPosition(sf::Vector2f(500, 400));
 	_timer->SetSize(sf::Vector2f(6, 2));
+
+	_gameMusic.openFromFile("audio/music/pain.ogg");
+	_gameMusic.setLoop(true);
+	_gameMusic.setVolume(25.f);
+	_gameMusic.play();
+
+	_rotateBuffer.loadFromFile("audio/fx/rotate.ogg");
+	_rotateSound.setBuffer(_rotateBuffer);
 
 	sf::Clock clock;
 	sf::Time elapsed;
@@ -297,6 +306,8 @@ void TetrisGame::GameLoop(float timeDelta)
 			{
 				if (board.canRotate(*currentPiece))
 				{
+					_rotateSound.play();
+
 					currentPiece->Rotate();
 				}
 			}

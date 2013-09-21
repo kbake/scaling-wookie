@@ -2,6 +2,8 @@
 
 #include "TetrisPiece.h"
 
+class ScoreBoard;
+
 class TetrisBoard
 {
 public:
@@ -12,6 +14,7 @@ public:
 	int GetBoardHeight() const;
 
 	void SetTexture(sf::Texture&);
+	void SetScoreBoard(ScoreBoard&);
 
 	void AddPiece(TetrisPiece&);
 	
@@ -33,7 +36,11 @@ private:
 	static const int BOARD_WIDTH = 10;
 	static const int BOARD_HEIGHT = 20;
 
+	ScoreBoard* _scoreboard;
+
 	sf::Texture _texture;
+	sf::Sound _explosion;
+	sf::SoundBuffer _explosionBuffer;
 
 	std::vector<sf::Sprite> _sprites;
 

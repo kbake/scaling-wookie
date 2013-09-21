@@ -14,6 +14,7 @@
 
 // TODO: reference additional headers your program requires here
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 
 #include <list>
 #include <iostream>

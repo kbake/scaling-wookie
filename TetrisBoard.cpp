@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TetrisBoard.h"
 #include "TetrisPiece.h"
+#include "ScoreBoard.h"
 
 
 TetrisBoard::TetrisBoard(void)
@@ -17,6 +18,9 @@ TetrisBoard::TetrisBoard(void)
 			_sprites[i * BOARD_HEIGHT + j].setPosition(32.f * i, 32.f * j);
 		}
 	}
+
+	_explosionBuffer.loadFromFile("audio/fx/Explosion3.wav");
+	_explosion.setBuffer(_explosionBuffer);
 }
 
 
@@ -47,6 +51,11 @@ void TetrisBoard::SetTexture(sf::Texture& t)
 
 		it++;
 	}
+}
+
+void TetrisBoard::SetScoreBoard(ScoreBoard& sb)
+{
+	_scoreboard = &sb;
 }
 
 void TetrisBoard::AddPiece(TetrisPiece& a_piece)	// adds a piece to the board based on the pieces location and size and such
@@ -180,7 +189,7 @@ bool TetrisBoard::canMoveRight(TetrisPiece& a_piece) const
 //			std::cout << std::endl << "blah " << a_piece.length - 1 << std::endl;
 			if (a_piece.GetShape()[a_piece.GetLength() - 1 - (size - GetBoardWidth())][i] == 1)
 			{
-				std::cout << std::endl << "right: outside board boundaries" << std::endl;
+//				std::cout << std::endl << "right: outside board boundaries" << std::endl;
 				return false;
 			}
 		}
@@ -201,7 +210,7 @@ bool TetrisBoard::canMoveRight(TetrisPiece& a_piece) const
 			//std::cout << board.board[i][j];
 			if (a_piece.GetShape()[k][q] == 1 && board[i][j] == 1)
 			{
-				std::cout << std::endl << "right: piece in the way" << std::endl;
+//				std::cout << std::endl << "right: piece in the way" << std::endl;
 				return false;
 			}
 		}
@@ -224,7 +233,7 @@ bool TetrisBoard::canMoveLeft(TetrisPiece& a_piece) const
 			//std::cout << "shape[" << abs(a_piece.GetCoords().x) << "][" << i << "] = " << a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] << std::endl;
 			if (a_piece.GetShape()[abs(a_piece.GetCoords().x)][i] == 1)
 			{
-				std::cout << std::endl << "left: outside board boundaries" << std::endl;
+//				std::cout << std::endl << "left: outside board boundaries" << std::endl;
 				return false;
 			}
 		}
@@ -242,7 +251,7 @@ bool TetrisBoard::canMoveLeft(TetrisPiece& a_piece) const
 //			std::cout << a_piece.shape[q][k];
 			if (a_piece.GetShape()[k][q] == 1 && board[i][j] == 1)
 			{
-				std::cout << std::endl << "left: pieces in the way" << std::endl;
+//				std::cout << std::endl << "left: pieces in the way" << std::endl;
 				return false;
 			}
 		}
@@ -267,7 +276,7 @@ bool TetrisBoard::canMoveDown(TetrisPiece& a_piece) const
 //			std::cout << "shape[" << i << "][" << tempnum << "] = " << a_piece.GetShape()[i][tempnum] << std::endl;
 			if (a_piece.GetShape()[i][tempnum] == 1)
 			{
-				std::cout << std::endl << "down: outside board boundaries" << std::endl;
+//				std::cout << std::endl << "down: outside board boundaries" << std::endl;
 				return false;
 			}
 		}
@@ -289,7 +298,7 @@ bool TetrisBoard::canMoveDown(TetrisPiece& a_piece) const
 			//std::cout << board.board[i][j];
 			if (a_piece.GetShape()[k][q] == 1 && board[i][j] == 1)
 			{
-				std::cout << std::endl << "down: pieces in the way" << std::endl;
+//				std::cout << std::endl << "down: pieces in the way" << std::endl;
 				return false;
 			}
 		}
@@ -364,12 +373,15 @@ void TetrisBoard::Update(double deltaTime)
 
 	if (temp_nums.size() > 0)
 	{
+		_scoreboard->SetScore((int)pow(10, temp_nums.size()));
+
 		for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
 		{
 			DeleteRow(temp_nums[i]);
 			MoveRows(temp_nums[i]);
 		}
 
+		_explosion.play();
 		temp_nums.clear();
 	}
 }
