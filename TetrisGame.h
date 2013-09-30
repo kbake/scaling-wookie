@@ -28,6 +28,9 @@ private:
 	std::list<sf::Sprite*> spriteList;
 
 	sf::RenderWindow _mainWindow;
+	sf::Music _gameMusic;
+	sf::Sound _rotateSound;
+	sf::SoundBuffer _rotateBuffer;
 	sf::Texture _blockTexture;
 	sf::Sprite _blockSprite;
 	sf::Vector2i _boardLocation;
