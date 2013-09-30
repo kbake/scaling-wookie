@@ -4,7 +4,15 @@
 #include "ScoreBoard.h"
 
 
-TetrisBoard::TetrisBoard(void)
+TetrisBoard::TetrisBoard(void) :
+	_animationIndex(0),
+	_animationTotalTime(.5),
+	_animationCurrentTime(0.f),
+	_animationSize(12),
+	_animationTemp(0.f),
+	_sizeX(132),
+	_sizeY(132),
+	_isAnimating(false)
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
@@ -21,6 +29,11 @@ TetrisBoard::TetrisBoard(void)
 
 	_explosionBuffer.loadFromFile("audio/fx/Explosion3.wav");
 	_explosion.setBuffer(_explosionBuffer);
+
+	_explosionTexture.loadFromFile("images/explosion_sheet.png");
+	_explosionSprite.setTexture(_explosionTexture);
+	_explosionSprite.setTextureRect(sf::IntRect(_animationIndex*_sizeX, 0, _sizeX, _sizeY));
+	_explosionSprite.setPosition(0, 0);
 }
 
 
@@ -373,16 +386,48 @@ void TetrisBoard::Update(double deltaTime)
 
 	if (temp_nums.size() > 0)
 	{
-		_scoreboard->SetScore((int)pow(10, temp_nums.size()));
-
-		for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
+		if (!_isAnimating && _animationCurrentTime < _animationTotalTime)
 		{
-			DeleteRow(temp_nums[i]);
-			MoveRows(temp_nums[i]);
+			_explosion.play();
+
+			_explosionSprite.setPosition(96, (temp_nums[0] - 1) * 32);
+
+			_isAnimating = true;
 		}
 
-		_explosion.play();
-		temp_nums.clear();
+		if (_isAnimating)
+		{
+			_animationCurrentTime += deltaTime;
+			_animationTemp += deltaTime;
+			
+			_explosionSprite.setTextureRect(sf::IntRect(_animationIndex * _sizeX, 0, _sizeX, _sizeY));
+
+			if (_animationTemp >= ((double)_animationTotalTime/(double)_animationSize))
+			{
+				_animationIndex++;
+				_animationTemp = 0;
+
+				if (_animationIndex >= _animationSize)
+				{
+					_isAnimating = false;
+				}
+			}
+		}
+		else
+		{
+			_scoreboard->SetScore((int)pow(10, temp_nums.size()));
+
+			for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
+			{
+				DeleteRow(temp_nums[i]);
+				MoveRows(temp_nums[i]);
+			}
+
+			temp_nums.clear();
+
+			_animationCurrentTime = 0;
+			_animationIndex = 0;
+		}
 	}
 }
 
@@ -397,4 +442,6 @@ void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 
 		it++;
 	}
+
+	if (_isAnimating)	renderWindow.draw(_explosionSprite);
 }

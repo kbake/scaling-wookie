@@ -38,11 +38,23 @@ private:
 
 	ScoreBoard* _scoreboard;
 
+	sf::Texture _explosionTexture;
 	sf::Texture _texture;
+	sf::Sprite _explosionSprite;
 	sf::Sound _explosion;
 	sf::SoundBuffer _explosionBuffer;
 
 	std::vector<sf::Sprite> _sprites;
+
+	double _animationCurrentTime;
+	double _animationTemp;
+	float _animationTotalTime;
+	int _animationIndex;
+	int _animationSize;
+	int _sizeX;
+	int _sizeY;
+
+	bool _isAnimating;
 
 public:
 	int board[BOARD_WIDTH][BOARD_HEIGHT];	// I'd prefer not to make this public but I'm also lazy

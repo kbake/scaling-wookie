@@ -58,7 +58,7 @@ void TetrisGame::Start()
 	_boardLocation = sf::Vector2i(0, 0);
 
 	_blockTexture.loadFromFile("images/block.png");
-	_blockTexture.setRepeated(true);
+	//_blockTexture.setRepeated(true);
 
 	_blockSprite.setTexture(_blockTexture);
 	_blockSprite.setColor(sf::Color(0, 255, 0));
@@ -184,9 +184,9 @@ void TetrisGame::Start()
 	_timer->SetPosition(sf::Vector2f(500, 400));
 	_timer->SetSize(sf::Vector2f(6, 2));
 
-	_gameMusic.openFromFile("audio/music/pain.ogg");
+	_gameMusic.openFromFile("audio/music/recording.wav");
 	_gameMusic.setLoop(true);
-	_gameMusic.setVolume(25.f);
+	_gameMusic.setVolume(50.f);
 	_gameMusic.play();
 
 	_rotateBuffer.loadFromFile("audio/fx/rotate.ogg");
@@ -230,7 +230,11 @@ void TetrisGame::GameLoop(float timeDelta)
 		break;
 	case TetrisGame::Playing:
 		totalTimeElapsed += timeDelta;
-		_timer->SetText(std::to_string(totalTimeElapsed));
+		// I know...this is gross
+		_timer->SetText(std::to_string((int)totalTimeElapsed/3600) + "" + std::to_string((int)totalTimeElapsed/60) + ":" + (((int)totalTimeElapsed % 60) < 10 ? "0" : "") + std::to_string((int)totalTimeElapsed % 60));
+
+		if (tickSpeed != .25 && (int)totalTimeElapsed/60 >= 2) tickSpeed = .25;
+		else if (tickSpeed != .5 && (int)totalTimeElapsed/60 >= 1) tickSpeed = .5;
 
 		tickTimeElapsed += timeDelta;
 
