@@ -184,9 +184,9 @@ void TetrisGame::Start()
 	_timer->SetPosition(sf::Vector2f(500, 400));
 	_timer->SetSize(sf::Vector2f(6, 2));
 
-	_gameMusic.openFromFile("audio/music/recording.wav");
+	_gameMusic.openFromFile("audio/music/music.ogg");
 	_gameMusic.setLoop(true);
-	_gameMusic.setVolume(50.f);
+	//_gameMusic.setVolume(50.f);
 	_gameMusic.play();
 
 	_rotateBuffer.loadFromFile("audio/fx/rotate.ogg");
