@@ -5,10 +5,11 @@
 #include "PreviewBox.h"
 #include "ScoreBoard.h"
 #include "Timer.h"
+#include "SimpleScreen.h"
 
 
 TetrisGame::TetrisGame(void) :
-	_gameState(GameState::Playing),
+	_gameState(GameState::ShowingSplash),
 	totalTimeElapsed(0),
 	tickSpeed(1),
 	tickTimeElapsed(0)
@@ -192,6 +193,8 @@ void TetrisGame::Start()
 	_rotateBuffer.loadFromFile("audio/fx/rotate.ogg");
 	_rotateSound.setBuffer(_rotateBuffer);
 
+	_simpleScreen = new SimpleScreen();
+
 	sf::Clock clock;
 	sf::Time elapsed;
 
@@ -223,6 +226,21 @@ void TetrisGame::GameLoop(float timeDelta)
 	switch (_gameState)
 	{
 	case TetrisGame::ShowingSplash:
+		_simpleScreen->Draw(_mainWindow);
+
+		if (event.type == sf::Event::Closed)
+		{
+			_gameState = TetrisGame::Exiting;
+		}
+
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			{
+				_gameState = TetrisGame::Playing;
+			}
+		}
+
 		break;
 	case TetrisGame::ShowingMenu:
 		break;

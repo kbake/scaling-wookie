@@ -5,6 +5,7 @@
 class PreviewBox;
 class ScoreBoard;
 class Timer;
+class SimpleScreen;
 
 class TetrisGame
 {
@@ -46,6 +47,7 @@ private:
 	TetrisPiece* nextPiece;
 	PreviewBox* _previewBox;
 	ScoreBoard* _scoreBoard;
+	SimpleScreen* _simpleScreen;
 	Timer* _timer;
 };
 
