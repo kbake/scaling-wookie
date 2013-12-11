@@ -33,6 +33,8 @@ private:
 	sf::Sound _rotateSound;
 	sf::SoundBuffer _rotateBuffer;
 	sf::Texture _blockTexture;
+	sf::Texture _titleScreenTexture;
+	sf::Texture _mainMenuTexture;
 	sf::Sprite _blockSprite;
 	sf::Vector2i _boardLocation;
 
@@ -47,7 +49,8 @@ private:
 	TetrisPiece* nextPiece;
 	PreviewBox* _previewBox;
 	ScoreBoard* _scoreBoard;
-	SimpleScreen* _simpleScreen;
+	SimpleScreen* _titleScreen;
+	SimpleScreen* _menuScreen;
 	Timer* _timer;
 };
 

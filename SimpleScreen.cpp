@@ -4,13 +4,18 @@
 
 SimpleScreen::SimpleScreen(void)
 {
-	_texture.loadFromFile("images/titlescreen.png");
-	_background.setTexture(_texture);
 }
 
 
 SimpleScreen::~SimpleScreen(void)
 {
+}
+
+void SimpleScreen::SetTexture(sf::Texture& texture)
+{
+	_texture = texture;
+
+	_background.setTexture(_texture);
 }
 
 void SimpleScreen::Update(double deltaTime)

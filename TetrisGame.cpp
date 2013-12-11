@@ -50,6 +50,18 @@ TetrisGame::~TetrisGame(void)
 		delete _timer;
 		_timer = NULL;
 	}
+
+	if (_titleScreen)
+	{
+		delete _titleScreen;
+		_titleScreen = NULL;
+	}
+
+	if (_menuScreen)
+	{
+		delete _menuScreen;
+		_menuScreen = NULL;
+	}
 }
 
 void TetrisGame::Start()
@@ -193,7 +205,13 @@ void TetrisGame::Start()
 	_rotateBuffer.loadFromFile("audio/fx/rotate.ogg");
 	_rotateSound.setBuffer(_rotateBuffer);
 
-	_simpleScreen = new SimpleScreen();
+	_titleScreenTexture.loadFromFile("images/titlescreen.png");
+	_titleScreen = new SimpleScreen();
+	_titleScreen->SetTexture(_titleScreenTexture);
+
+	_mainMenuTexture.loadFromFile("images/menuscreen.png");
+	_menuScreen = new SimpleScreen();
+	_menuScreen->SetTexture(_mainMenuTexture);
 
 	sf::Clock clock;
 	sf::Time elapsed;
@@ -235,16 +253,33 @@ void TetrisGame::GameLoop(float timeDelta)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 			{
+				_gameState = TetrisGame::ShowingMenu;
+			}
+		}
+
+		_mainWindow.clear(sf::Color(0, 255, 255));
+		_titleScreen->Draw(_mainWindow);
+		_mainWindow.display();
+
+		break;
+	case TetrisGame::ShowingMenu:
+		if (event.type == sf::Event::Closed)
+		{
+			_gameState = TetrisGame::Exiting;
+		}
+
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			{
 				_gameState = TetrisGame::Playing;
 			}
 		}
 
 		_mainWindow.clear(sf::Color(0, 255, 255));
-		_simpleScreen->Draw(_mainWindow);
+		_menuScreen->Draw(_mainWindow);
 		_mainWindow.display();
 
-		break;
-	case TetrisGame::ShowingMenu:
 		break;
 	case TetrisGame::Paused:
 		break;

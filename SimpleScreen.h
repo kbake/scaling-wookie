@@ -5,6 +5,8 @@ public:
 	SimpleScreen(void);
 	~SimpleScreen(void);
 
+	void SetTexture(sf::Texture&);
+
 	void Update(double);
 	void Draw(sf::RenderWindow&);
 
