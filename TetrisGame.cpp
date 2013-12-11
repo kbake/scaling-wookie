@@ -261,6 +261,10 @@ void TetrisGame::GameLoop(float timeDelta)
 
 		if (event.type == sf::Event::KeyPressed)
 		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				_gameState = GameState::Exiting;
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 			{
 				_gameState = TetrisGame::ShowingMenu;
@@ -280,6 +284,10 @@ void TetrisGame::GameLoop(float timeDelta)
 
 		if (event.type == sf::Event::KeyPressed)
 		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				_gameState = GameState::Exiting;
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
 				_gameState = TetrisGame::Playing;
@@ -299,6 +307,10 @@ void TetrisGame::GameLoop(float timeDelta)
 
 		if (event.type == sf::Event::KeyPressed)
 		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				_gameState = GameState::Exiting;
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
 				_gameState = TetrisGame::Playing;
