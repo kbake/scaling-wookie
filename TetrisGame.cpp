@@ -62,6 +62,12 @@ TetrisGame::~TetrisGame(void)
 		delete _menuScreen;
 		_menuScreen = NULL;
 	}
+
+	if (_pauseScreen)
+	{
+		delete _pauseScreen;
+		_pauseScreen = NULL;
+	}
 }
 
 void TetrisGame::Start()
@@ -213,6 +219,10 @@ void TetrisGame::Start()
 	_menuScreen = new SimpleScreen();
 	_menuScreen->SetTexture(_mainMenuTexture);
 
+	_pauseScreenTexture.loadFromFile("images/pausescreen.png");
+	_pauseScreen = new SimpleScreen();
+	_pauseScreen->SetTexture(_pauseScreenTexture);
+
 	sf::Clock clock;
 	sf::Time elapsed;
 
@@ -282,6 +292,30 @@ void TetrisGame::GameLoop(float timeDelta)
 
 		break;
 	case TetrisGame::Paused:
+		if (event.type == sf::Event::Closed)
+		{
+			_gameState = TetrisGame::Exiting;
+		}
+
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+			{
+				_gameState = TetrisGame::Playing;
+			}
+		}
+
+		_mainWindow.clear(sf::Color(0, 255, 255));
+		
+		board.Draw(_mainWindow);
+		currentPiece->Draw(_mainWindow);
+		_previewBox->Draw(_mainWindow);
+		_scoreBoard->Draw(_mainWindow);
+		_timer->Draw(_mainWindow);
+		_pauseScreen->Draw(_mainWindow);
+
+		_mainWindow.display();
+
 		break;
 	case TetrisGame::Playing:
 		totalTimeElapsed += timeDelta;
@@ -369,6 +403,10 @@ void TetrisGame::GameLoop(float timeDelta)
 
 					currentPiece->Rotate();
 				}
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+			{
+				_gameState = TetrisGame::Paused;
 			}
 		}
 

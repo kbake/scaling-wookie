@@ -35,6 +35,7 @@ private:
 	sf::Texture _blockTexture;
 	sf::Texture _titleScreenTexture;
 	sf::Texture _mainMenuTexture;
+	sf::Texture _pauseScreenTexture;
 	sf::Sprite _blockSprite;
 	sf::Vector2i _boardLocation;
 
@@ -51,6 +52,7 @@ private:
 	ScoreBoard* _scoreBoard;
 	SimpleScreen* _titleScreen;
 	SimpleScreen* _menuScreen;
+	SimpleScreen* _pauseScreen;
 	Timer* _timer;
 };
 
