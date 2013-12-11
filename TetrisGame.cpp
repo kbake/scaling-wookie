@@ -226,8 +226,6 @@ void TetrisGame::GameLoop(float timeDelta)
 	switch (_gameState)
 	{
 	case TetrisGame::ShowingSplash:
-		_simpleScreen->Draw(_mainWindow);
-
 		if (event.type == sf::Event::Closed)
 		{
 			_gameState = TetrisGame::Exiting;
@@ -240,6 +238,10 @@ void TetrisGame::GameLoop(float timeDelta)
 				_gameState = TetrisGame::Playing;
 			}
 		}
+
+		_mainWindow.clear(sf::Color(0, 255, 255));
+		_simpleScreen->Draw(_mainWindow);
+		_mainWindow.display();
 
 		break;
 	case TetrisGame::ShowingMenu:
