@@ -288,7 +288,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			{
 				_gameState = GameState::Exiting;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 			{
 				_gameState = TetrisGame::Playing;
 			}
