@@ -313,6 +313,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
+				_gameMusic.setVolume(100);
 				_gameState = TetrisGame::Playing;
 			}
 		}
@@ -418,6 +419,7 @@ void TetrisGame::GameLoop(float timeDelta)
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
+				_gameMusic.setVolume(50);
 				_gameState = TetrisGame::Paused;
 			}
 		}
