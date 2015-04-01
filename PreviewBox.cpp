@@ -30,13 +30,13 @@ void PreviewBox::SetTexture(sf::Texture& texture)
 void PreviewBox::SetLocation(sf::Vector2i loc)
 {
 	_location = loc;
-	_box.setPosition(_location.x, _location.y);
+	_box.setPosition((float)_location.x, (float)_location.y);
 }
 
 void PreviewBox::SetSize(sf::Vector2i size)
 {
 	_size = size;
-	_box.setScale(_size.x, _size.y);
+	_box.setScale((float)_size.x, (float)_size.y);
 }
 
 void PreviewBox::Draw(sf::RenderWindow& renderWindow)
