@@ -390,7 +390,7 @@ void TetrisBoard::Update(double deltaTime)
 		{
 			_explosion.play();
 
-			_explosionSprite.setPosition(96, (temp_nums[0] - 1) * 32);
+			_explosionSprite.setPosition(96.0, (float)((temp_nums[0] - 1) * 32));
 
 			_isAnimating = true;
 		}
@@ -417,7 +417,7 @@ void TetrisBoard::Update(double deltaTime)
 		{
 			_scoreboard->SetScore((int)pow(10, temp_nums.size()));
 
-			for (int i = 0; i < temp_nums.size(); i++)		// temp delete loop
+			for (size_t i = 0; i < temp_nums.size(); i++)		// temp delete loop
 			{
 				DeleteRow(temp_nums[i]);
 				MoveRows(temp_nums[i]);
@@ -433,7 +433,7 @@ void TetrisBoard::Update(double deltaTime)
 
 void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 {
-	std::vector<sf::Sprite>::iterator it = _sprites.begin();
+	std::vector<sf::Sprite>::iterator it  = _sprites.begin();
 	std::vector<sf::Sprite>::iterator end = _sprites.end();
 
 	while (it != end)
