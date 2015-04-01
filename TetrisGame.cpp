@@ -354,7 +354,7 @@ void TetrisGame::GameLoop(float timeDelta)
 
 		if (board.isFull())	// check if any pieces are at the top of the board
 		{
-			_gameState = TetrisGame::Exiting;
+			_gameState = TetrisGame::GameOver;
 		}
 		
 		// add score based off size
@@ -443,10 +443,34 @@ void TetrisGame::GameLoop(float timeDelta)
 		}
 
 		break;
+	case TetrisGame::GameOver:
+		// show game over screen
+		// game over screen will have the player's score and
+		// some text asking if they want to play again
+		// which prompts them to hit y/n or something
+
+		_mainWindow.clear(sf::Color(0, 255, 255));
+
+		_mainWindow.display();
+		
+		if( event.type == sf::Event::KeyPressed )
+		{
+			if( sf::Keyboard::isKeyPressed(sf::Keyboard::Y) )
+			{
+				CleanUp();
+
+				_gameState = ShowingMenu;
+			}
+			else if( sf::Keyboard::isKeyPressed(sf::Keyboard::N) )
+			{
+				_gameState = Exiting;
+			}
+		}
+		break;
 	}
 }
 
-bool TetrisGame::IsExiting()
+const bool TetrisGame::IsExiting() const
 {
 	if (_gameState == TetrisGame::Exiting)
 	{
@@ -454,4 +478,12 @@ bool TetrisGame::IsExiting()
 	}
 
 	return false;
+}
+
+void TetrisGame::CleanUp()
+{
+	// clean everything up for the next round
+	board.Reset();
+	totalTimeElapsed = 0;
+	_scoreBoard->SetScore(0);
 }

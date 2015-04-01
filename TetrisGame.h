@@ -16,11 +16,12 @@ public:
 	void Start();
 	sf::RenderWindow& GetWindow();
 
-	bool IsExiting();
+	const bool IsExiting() const;
 
 private:
 	void GameLoop(float);
 	void CreateNewPiece();
+	void CleanUp();
 
 	double totalTimeElapsed;
 	float tickSpeed;
@@ -39,7 +40,7 @@ private:
 	sf::Sprite _blockSprite;
 	sf::Vector2i _boardLocation;
 
-	enum GameState { ShowingSplash, ShowingMenu, Playing, Paused, Exiting };
+	enum GameState { ShowingSplash, ShowingMenu, Playing, Paused, GameOver, Exiting };
 
 	GameState _gameState;
 

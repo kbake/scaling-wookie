@@ -18,12 +18,12 @@ public:
 
 	void AddPiece(TetrisPiece&);
 	
-	bool isFull() const;
+	const bool isFull() const;
 
-	bool canRotate(TetrisPiece&) const;
-	bool canMoveRight(TetrisPiece&) const;
-	bool canMoveLeft(TetrisPiece&) const;
-	bool canMoveDown(TetrisPiece&) const;
+	const bool canRotate(TetrisPiece&) const;
+	const bool canMoveRight(TetrisPiece&) const;
+	const bool canMoveLeft(TetrisPiece&) const;
+	const bool canMoveDown(TetrisPiece&) const;
 
 	int CheckRow(int) const;
 	void DeleteRow(int);
@@ -31,6 +31,7 @@ public:
 
 	void Update(double);
 	void Draw(sf::RenderWindow&);	// would be nice to just create these sprites once, instead of every frame, should be easy
+	void Reset();
 
 private:
 	static const int BOARD_WIDTH = 10;

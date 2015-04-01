@@ -48,7 +48,14 @@ sf::Vector2f ScoreBoard::GetSize() const
 	return _size;
 }
 
-void ScoreBoard::SetScore(int score)
+void ScoreBoard::SetScore(const int score)
+{
+	_score = score;
+
+	_text.setString(std::to_string(_score));
+}
+
+void ScoreBoard::AddScore(const int score)
 {
 	_score += score;
 	

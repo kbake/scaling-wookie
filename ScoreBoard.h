@@ -13,7 +13,8 @@ public:
 	sf::Vector2f GetPosition() const;
 	sf::Vector2f GetSize() const;
 
-	void SetScore(int);
+	void SetScore(const int);
+	void AddScore(const int);
 	void SetFont(std::string);
 	void SetText(std::string);
 	void SetTexture(sf::Texture&);

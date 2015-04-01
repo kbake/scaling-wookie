@@ -93,7 +93,7 @@ void TetrisBoard::AddPiece(TetrisPiece& a_piece)	// adds a piece to the board ba
 	}
 }
 
-bool TetrisBoard::isFull() const	// check if the top row has a piece in it...if so, game over man, game over
+const bool TetrisBoard::isFull() const	// check if the top row has a piece in it...if so, game over man, game over
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
@@ -106,7 +106,7 @@ bool TetrisBoard::isFull() const	// check if the top row has a piece in it...if 
 	return false;
 }
 
-bool TetrisBoard::canRotate(TetrisPiece& a_piece) const
+const bool TetrisBoard::canRotate(TetrisPiece& a_piece) const
 {
 	// make temp array to hold rotated piece
 	int** temp = new int*[a_piece.GetLength()];
@@ -190,7 +190,7 @@ bool TetrisBoard::canRotate(TetrisPiece& a_piece) const
 	return true;
 }
 
-bool TetrisBoard::canMoveRight(TetrisPiece& a_piece) const
+const bool TetrisBoard::canMoveRight(TetrisPiece& a_piece) const
 {
 	int size = a_piece.GetLength() + a_piece.GetCoords().x;
 
@@ -234,7 +234,7 @@ bool TetrisBoard::canMoveRight(TetrisPiece& a_piece) const
 	return true;
 }
 
-bool TetrisBoard::canMoveLeft(TetrisPiece& a_piece) const
+const bool TetrisBoard::canMoveLeft(TetrisPiece& a_piece) const
 {
 	int location = a_piece.GetCoords().x - 1;
 
@@ -275,7 +275,7 @@ bool TetrisBoard::canMoveLeft(TetrisPiece& a_piece) const
 	return true;
 }
 
-bool TetrisBoard::canMoveDown(TetrisPiece& a_piece) const
+const bool TetrisBoard::canMoveDown(TetrisPiece& a_piece) const
 {
 	int location = a_piece.GetCoords().y + a_piece.GetLength() + 1;
 
@@ -415,7 +415,7 @@ void TetrisBoard::Update(double deltaTime)
 		}
 		else
 		{
-			_scoreboard->SetScore((int)pow(10, temp_nums.size()));
+			_scoreboard->AddScore((int)pow(10, temp_nums.size()));
 
 			for (size_t i = 0; i < temp_nums.size(); i++)		// temp delete loop
 			{
@@ -444,4 +444,21 @@ void TetrisBoard::Draw(sf::RenderWindow& renderWindow)
 	}
 
 	if (_isAnimating)	renderWindow.draw(_explosionSprite);
+}
+
+void TetrisBoard::Reset()
+{
+	// we want to empty the board
+	for( int i = 0; i < BOARD_WIDTH; i++ )
+	{
+		for( int j = 0; j < BOARD_HEIGHT; j++ )
+		{
+			board[i][j] = 0;
+
+			//_sprites[i * BOARD_HEIGHT + j] = new sf::Sprite();
+			_sprites.push_back(sf::Sprite());
+			_sprites[i * BOARD_HEIGHT + j].setColor(sf::Color::Black);
+			_sprites[i * BOARD_HEIGHT + j].setPosition(32.f * i, 32.f * j);
+		}
+	}
 }
